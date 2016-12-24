@@ -56,28 +56,28 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
             outprefix = "treat{0}".format(str((index / 2) + 1))
             result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index, Outputdir,
                                                             outprefix, treatment[0], treatment[1],
-                                                            Annotationfile, feature_count_path,)))
+                                                            Annotationfile, feature_count_path, Seqtype[1],)))
 
         for index in range(0, len(Control), 2):
             controls = Control[index:index + 2]
             outprefix = "mapping/control{0}".format(str((index / 2) + 1))
             result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index,
                                                             outprefix, controls[0], controls[1],
-                                                            Annotationfile, feature_count_path,)))
+                                                            Annotationfile, feature_count_path, Seqtype[1],)))
 
     elif data_type.lower() == "single_end" or data_type.lower() =="singleend":
         for index in range(len(Treat)):
             treatment = Treat[index]
             outprefix = "treat{0}".format(str(index + 1))
-            result.append(pool.apply_async(hisat2_single_run,(HISAT2_path, HISAT2_index,
+            result.append(pool.apply_async(hisat2_single_run, (HISAT2_path, HISAT2_index,
                                                               Outputdir, outprefix, treatment,
-                                                              Annotationfile, feature_count_path,)))
+                                                              Annotationfile, feature_count_path, Seqtype[1],)))
         for index in range(len(Control)):
             controls = Control[index]
             outprefix = "control{0}".format(str(index + 1))
-            result.append(pool.apply_async(hisat2_single_run(HISAT2_path, HISAT2_index,
+            result.append(pool.apply_async(hisat2_single_run,(HISAT2_path, HISAT2_index,
                                                              Outputdir, outprefix, controls,
-                                                             Annotationfile, feature_count_path,)))
+                                                             Annotationfile, feature_count_path, Seqtype[1],)))
 
     else:
         print "Unidentified library type!"

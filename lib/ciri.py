@@ -70,10 +70,10 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
         sh("intersectBed -a {0}/circ_results/annotation_table.txt -b\
          {3}/lib/db/{2}_circRNA_database.txt -wa -wb -s -f 1.0 -r\
          | cut -f 4,5,7,11| awk '{1}' | uniq > {0}/circ_results/annotation_table_circbase.txt"\
-           .format(outputdir,awk_arg,genome,softpath))
+           .format(outputdir, awk_arg, genome, softpath))
 
     sh("Rscript {4}/lib/circ_deseq.r {0}/circ_expr/ {1} {2} {3}"\
-       .format(outputdir, nrep, pairtype, pvalue,softpath))
+       .format(outputdir, nrep, pairtype, pvalue, softpath))
     # make circ_down and up to bed format
     up_file=[i.rstrip() for i in open("{0}/circ_results/circ_up.txt".format(outputdir))]
     with open("{0}/circ_results/circ_up2.txt".format(outputdir),"w") as f:
@@ -138,6 +138,7 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
         if int(up_mi[myline][12]) > 60:
             _mylines = "\t".join(up_mi[myline])
             print >> pass_up, _mylines
+            
     high_down = open("{0}/circ_results/targetscan/circ_down_high.txt".format(outputdir), 'w')
     pass_down = open("{0}/circ_results/targetscan/circ_down_pass.txt".format(outputdir), 'w')
     down_mi = [i.rstrip().split("\t") for i in open("{0}/circ_results/targetscan/circ_down_tmp.txt".format(outputdir))]

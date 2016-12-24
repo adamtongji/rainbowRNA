@@ -13,7 +13,7 @@ HISAT2indexdir:/home/fusl/HISAT2index_hg19_125_pe/
 Genome:hg19,default
 Genomefile:
 Annotationfile:
-Max_process:1
+Max_process:2
 
 ## feature-count settings, run numbers of htseq-count simultaneously. Default is sum of treat and control
 
