@@ -136,12 +136,13 @@ def downstream_main(Outputdir, Genome):
         sh('mkdir {0}/results/cytoscape'.format(Outputdir))
     if Genome.lower() == 'hg19' or Genome.lower() == 'hg38':
         sh('{1}/lib/DEG2network.py -p 0.05 -n 5 -k\
-         {1}/lib/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+         {1}/lib/db/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(Outputdir,SOFT_PATH))
     elif Genome.lower() == 'mm9' or Genome.lower() == 'mm10':
         sh('{1}/lib/DEG2network_mouse.py -p 0.05 -n 5 -k\
-         {1}/lib/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+         {1}/lib/db/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(Outputdir,SOFT_PATH))
+    get_report(Outputdir)
 
 
 @time_func
@@ -169,6 +170,7 @@ def circ_mapping_main(Genomefile,Treat, Control,Outputdir, Seqtype,
 def circ_process_main(Outputdir, Pair_rep, pvalue,Annotationfile,Genome,Genomefile,Treat):
     Num_of_rep = int(len(Treat)/2)
     ciri_process(Outputdir,Num_of_rep, Pair_rep,pvalue,SOFT_PATH,Annotationfile,Genomefile,Genome)
+    get_ciri_report(Outputdir)
 
 
 @time_dec

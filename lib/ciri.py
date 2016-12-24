@@ -17,12 +17,12 @@ def ciri_run(outprefix,genomefile,annotationfile, *files):
 
 
 def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genomefile,genome="hg19"):
-    if not os.path.isdir("{0}/circ_results/".format(outputdir)):
-        sh("mkdir {0}/circ_results/".format(outputdir))
-    if not os.path.isdir("{0}/circ_expr/".format(outputdir)):
-        sh("mkdir {0}/circ_expr/".format(outputdir))
+    if not os.path.isdir("{0}/results/".format(outputdir)):
+        sh("mkdir {0}/results/".format(outputdir))
+    if not os.path.isdir("{0}/expr/".format(outputdir)):
+        sh("mkdir {0}/expr/".format(outputdir))
     # process ciri_expr files to merge_expr and merge_annotation files.
-    sh('mkdir {0}/circ_results/up;mkdir {0}/circ_results/down {0}/circ_results/targetscan'.format(outputdir))
+    sh('mkdir {0}/results/up;mkdir {0}/results/down {0}/results/targetscan'.format(outputdir))
     gene_list=[]
     for filetype in ["control","treat"]:
         for num in range(1,nrep+1):
@@ -57,32 +57,32 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
                             gene_id.append(genesummary[1][index])
                 else:
                     gene_id.append("0")
-            with open("{0}/circ_expr/{1}{2}.txt".format(outputdir,filetype,str(num)),"w") as f:
+            with open("{0}/expr/{1}{2}.txt".format(outputdir,filetype,str(num)),"w") as f:
                 expr_table2 = ['\t'.join(i) for i in expr_table]
                 for line in expr_table2:
                     print >>f, line
 
-    with open("{0}/circ_results/annotation_table.txt".format(outputdir),"w") as f:
+    with open("{0}/results/annotation_table.txt".format(outputdir),"w") as f:
         for mykey in annot_table.iterkeys():
             print >> f, "{1}\t{0}".format(mykey,annot_table[mykey])
     awk_arg='{printf "%s\\t%s\\t%s\\t%s\\n",$3,$2,$1,$4}'
     if genome.lower()=="mm9" or genome.lower()=="hg19":
-        sh("intersectBed -a {0}/circ_results/annotation_table.txt -b\
+        sh("intersectBed -a {0}/results/annotation_table.txt -b\
          {3}/lib/db/{2}_circRNA_database.txt -wa -wb -s -f 1.0 -r\
-         | cut -f 4,5,7,11| awk '{1}' | uniq > {0}/circ_results/annotation_table_circbase.txt"\
+         | cut -f 4,5,7,11| awk '{1}' | uniq > {0}/results/annotation_table_circbase.txt"\
            .format(outputdir, awk_arg, genome, softpath))
 
-    sh("Rscript {4}/lib/circ_deseq.r {0}/circ_expr/ {1} {2} {3}"\
+    sh("Rscript {4}/lib/circ_deseq.r {0}/expr/ {1} {2} {3}"\
        .format(outputdir, nrep, pairtype, pvalue, softpath))
     # make circ_down and up to bed format
-    up_file=[i.rstrip() for i in open("{0}/circ_results/circ_up.txt".format(outputdir))]
-    with open("{0}/circ_results/circ_up2.txt".format(outputdir),"w") as f:
+    up_file=[i.rstrip() for i in open("{0}/results/circ_up.txt".format(outputdir))]
+    with open("{0}/results/circ_up2.txt".format(outputdir),"w") as f:
         up_out=[i.split("_")[:3]+["."]+[i]+i.split("_")[3:] for i in up_file]
         up_out2 = ['\t'.join(i) for i in up_out]
         for line in up_out2:
             print >>f, line
-    down_file=[i.rstrip() for i in open("{0}/circ_results/circ_down.txt".format(outputdir))]
-    with open("{0}/circ_results/circ_down2.txt".format(outputdir),"w") as f:
+    down_file=[i.rstrip() for i in open("{0}/results/circ_down.txt".format(outputdir))]
+    with open("{0}/results/circ_down2.txt".format(outputdir),"w") as f:
         down_out=[i.split("_")[:3]+[i]+["."]+i.split("_")[3:] for i in down_file]
         down_out2 = ['\t'.join(i) for i in down_out]
         for line in down_out2:
@@ -102,32 +102,32 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
 
 
     if awk_arg:
-        sh("grep 'exon' {3} |intersectBed -a {1}/circ_results/circ_up2.txt -b stdin\
+        sh("grep 'exon' {3} |intersectBed -a {1}/results/circ_up2.txt -b stdin\
         |bedtools getfasta -fi {0} -bed stdin -fo stdout -name -tab|\
-          awk '{2}' > {1}/circ_results/targetscan/circ_up_sequence.txt"\
+          awk '{2}' > {1}/results/targetscan/circ_up_sequence.txt"\
            .format(genomefile,outputdir,awk_arg,annotationfile))
-        sh("grep 'exon' {3} |intersectBed -a {1}/circ_results/circ_down2.txt -b stdin\
+        sh("grep 'exon' {3} |intersectBed -a {1}/results/circ_down2.txt -b stdin\
             |bedtools getfasta -fi {0} -bed stdin -fo stdout -name -tab|\
-              awk '{2}' > {1}/circ_results/targetscan/circ_down_sequence.txt" \
+              awk '{2}' > {1}/results/targetscan/circ_down_sequence.txt" \
            .format(genomefile, outputdir, awk_arg, annotationfile))
 
-    sh("targetscan_60.pl /home/Public/software/targetscan/miR_Family_Info.txt {0}/circ_results/targetscan/circ_up_sequence.txt\
-       {0}/circ_results/targetscan/circ_up_miRNA.txt ".format(outputdir))
-    sh("targetscan_60.pl /home/Public/software/targetscan/miR_Family_Info.txt {0}/circ_results/targetscan/circ_down_sequence.txt\
-        {0}/circ_results/targetscan/circ_down_miRNA.txt ".format(outputdir))
+    sh("targetscan_60.pl /home/Public/software/targetscan/miR_Family_Info.txt {0}/results/targetscan/circ_up_sequence.txt\
+       {0}/results/targetscan/circ_up_miRNA.txt ".format(outputdir))
+    sh("targetscan_60.pl /home/Public/software/targetscan/miR_Family_Info.txt {0}/results/targetscan/circ_down_sequence.txt\
+        {0}/results/targetscan/circ_down_miRNA.txt ".format(outputdir))
     sh("cp /home/Public/software/targetscan/TA_SPS_by_seed_region.txt ./")
     sh("targetscan_60_context_scores.pl /home/Public/software/targetscan/miR_for_context_scores.txt\
-     {0}/circ_results/targetscan/circ_down_miRNA.txt {0}/circ_results/circ_down2.txt {0}/circ_results/targetscan/circ_down_score.txt".format(outputdir))
+     {0}/results/targetscan/circ_down_miRNA.txt {0}/results/circ_down2.txt {0}/results/targetscan/circ_down_score.txt".format(outputdir))
     sh("targetscan_60_context_scores.pl /home/Public/software/targetscan/miR_for_context_scores.txt\
-        {0}/circ_results/targetscan/circ_up_miRNA.txt {0}/circ_results/circ_up2.txt {0}/circ_results/targetscan/circ_up_score.txt".format(outputdir))
+        {0}/results/targetscan/circ_up_miRNA.txt {0}/results/circ_up2.txt {0}/results/targetscan/circ_up_score.txt".format(outputdir))
     sh("rm ./TA_SPS_by_seed_region.txt")
-    sh("cut -f1-13,17 {0}/circ_results/targetscan/circ_up_score.txt >{0}/circ_results/targetscan/circ_up_tmp.txt".format(outputdir))
-    sh("cut -f1-13,17 {0}/circ_results/targetscan/circ_down_score.txt >{0}/circ_results/targetscan/circ_down_tmp.txt".format(outputdir))
+    sh("cut -f1-13,17 {0}/results/targetscan/circ_up_score.txt >{0}/results/targetscan/circ_up_tmp.txt".format(outputdir))
+    sh("cut -f1-13,17 {0}/results/targetscan/circ_down_score.txt >{0}/results/targetscan/circ_down_tmp.txt".format(outputdir))
     # filter high and medium targets
-    #with open("{0}/circ_results/targetscan/circ_down_full.txt",'w') as f:
-    high_up = open("{0}/circ_results/targetscan/circ_up_high.txt".format(outputdir),'w')
-    pass_up = open("{0}/circ_results/targetscan/circ_up_pass.txt".format(outputdir),'w')
-    up_mi = [i.rstrip().split("\t") for i in open("{0}/circ_results/targetscan/circ_up_tmp.txt".format(outputdir))]
+    #with open("{0}/results/targetscan/circ_down_full.txt",'w') as f:
+    high_up = open("{0}/results/targetscan/circ_up_high.txt".format(outputdir),'w')
+    pass_up = open("{0}/results/targetscan/circ_up_pass.txt".format(outputdir),'w')
+    up_mi = [i.rstrip().split("\t") for i in open("{0}/results/targetscan/circ_up_tmp.txt".format(outputdir))]
     head = '\t'.join(up_mi[0])
     print >>high_up, head
     print >>pass_up, head
@@ -138,10 +138,10 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
         if int(up_mi[myline][12]) > 60:
             _mylines = "\t".join(up_mi[myline])
             print >> pass_up, _mylines
-            
-    high_down = open("{0}/circ_results/targetscan/circ_down_high.txt".format(outputdir), 'w')
-    pass_down = open("{0}/circ_results/targetscan/circ_down_pass.txt".format(outputdir), 'w')
-    down_mi = [i.rstrip().split("\t") for i in open("{0}/circ_results/targetscan/circ_down_tmp.txt".format(outputdir))]
+
+    high_down = open("{0}/results/targetscan/circ_down_high.txt".format(outputdir), 'w')
+    pass_down = open("{0}/results/targetscan/circ_down_pass.txt".format(outputdir), 'w')
+    down_mi = [i.rstrip().split("\t") for i in open("{0}/results/targetscan/circ_down_tmp.txt".format(outputdir))]
     head = '\t'.join(down_mi[0])
     print >> high_down, head
     print >> pass_down, head
@@ -159,36 +159,36 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
 
     # start with hg19 only first
     if genome.lower()=='hg19' or genome.lower()=='hg38':
-        sh("Rscript /home/Public/software/rnaseq2report/lib/pathway.r {0}/circ_results/".format(outputdir))
+        sh("Rscript /home/Public/software/rnaseq2report/lib/pathway.r {0}/results/".format(outputdir))
     if genome.lower()=='mm9' or genome.lower()=='mm10':
-        sh("Rscript /home/Public/software/rnaseq2report/lib/mouse_pathway.r {0}/circ_results".format(outputdir))
+        sh("Rscript /home/Public/software/rnaseq2report/lib/mouse_pathway.r {0}/results".format(outputdir))
 
     ## RBP binding with circ and gene
-    with open("{0}/circ_results/circ_up.bed".format(outputdir),"w") as f:
-        temp=[i.rstrip().split("_") for i in open("{0}/circ_results/circ_up2.txt".format(outputdir))]
+    with open("{0}/results/circ_up.bed".format(outputdir),"w") as f:
+        temp=[i.rstrip().split("_") for i in open("{0}/results/circ_up2.txt".format(outputdir))]
         temp2 = [i[:3]+["."]+["."]+[i[3]] for i in temp]
         temp3 = ['\t'.join(i) for i in temp2]
         for line in temp3:
             print >>f, line
-    with open("{0}/circ_results/circ_down.bed".format(outputdir), "w") as f:
-        temp = [i.rstrip().split("_") for i in open("{0}/circ_results/circ_down2.txt".format(outputdir))]
+    with open("{0}/results/circ_down.bed".format(outputdir), "w") as f:
+        temp = [i.rstrip().split("_") for i in open("{0}/results/circ_down2.txt".format(outputdir))]
         temp2 = [i[:3] + ["."] + ["."] + [i[3]] for i in temp]
         temp3 = ['\t'.join(i) for i in temp2]
         for line in temp3:
             print >> f, line
     if genome.lower() == 'hg19' or genome.lower() == 'hg38':
         sh("bash {1}/lib/RBP_count.sh\
-         {0}/circ_results/circ_down.bed {0}/circ_results/ciri_down_RBP.txt".format(outputdir,softpath))
+         {0}/results/circ_down.bed {0}/results/ciri_down_RBP.txt".format(outputdir,softpath))
         sh("bash {1}/lib/RBP_count.sh\
-            {0}/circ_results/circ_up.bed {0}/circ_results/ciri_up_RBP.txt".format(outputdir,softpath))
+            {0}/results/circ_up.bed {0}/results/ciri_up_RBP.txt".format(outputdir,softpath))
 
-    if not os.path.exists('{0}/circ_results/gsea/'.format(outputdir)):
-        sh('mkdir {0}/circ_results/gsea/'.format(outputdir))
+    if not os.path.exists('{0}/results/gsea/'.format(outputdir)):
+        sh('mkdir {0}/results/gsea/'.format(outputdir))
     else:
-        sh('rm -rf {0}/circ_results/gsea/'.format(outputdir))
-        sh('mkdir {0}/circ_results/gsea/'.format(outputdir))
+        sh('rm -rf {0}/results/gsea/'.format(outputdir))
+        sh('mkdir {0}/results/gsea/'.format(outputdir))
 
-    gsea_file = [i.rstrip().split('\t') for i in open('{0}/circ_results/Treat_vs_control_diff.txt'.format(outputdir))]
+    gsea_file = [i.rstrip().split('\t') for i in open('{0}/results/Treat_vs_control_diff.txt'.format(outputdir))]
     gsea_file = [i[:1]+i[4:5] for i in gsea_file]
     gsea_file = gsea_file[1:]
     gsea_file2 = []
@@ -199,31 +199,31 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
             _line[0]=_line[0].upper()
             gsea_file2.append(_line)
     gsea_file = ['\t'.join(i) for i in gsea_file2]
-    with open('{0}/circ_results/gsea_input.txt'.format(outputdir),'w') as f:
+    with open('{0}/results/gsea_input.txt'.format(outputdir),'w') as f:
         for line in gsea_file:
             print >>f, line
 
-    sh("sort -k 2gr {0}/circ_results/gsea_input.txt >{0}/circ_results/gsea/gsea_input.rnk".format(outputdir))
+    sh("sort -k 2gr {0}/results/gsea_input.txt >{0}/results/gsea/gsea_input.rnk".format(outputdir))
     sh("export LANG=en_US.UTF-8;java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
-     -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/circ_results/gsea/gsea_input.rnk -scoring_scheme weighted\
+     -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
       -rpt_label bp -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-       -set_min 15 -zip_report false -out {0}/circ_results/gsea/ -gui false".format(outputdir))
+       -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false".format(outputdir))
     sh("export LANG=en_US.UTF-8; java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
-     -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/circ_results/gsea/gsea_input.rnk -scoring_scheme weighted\
+     -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
       -rpt_label kegg -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-     -set_min 15 -zip_report false -out {0}/circ_results/gsea/ -gui false".format(outputdir))
+     -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false".format(outputdir))
 
     # step 4 cytoscape
-    if not os.path.exists('{0}/circ_results/cytoscape/'.format(outputdir)):
-        sh('mkdir {0}/circ_results/cytoscape'.format(outputdir))
+    if not os.path.exists('{0}/results/cytoscape/'.format(outputdir)):
+        sh('mkdir {0}/results/cytoscape'.format(outputdir))
     if genome.lower()=='hg19' or genome.lower()=='hg38':
         sh('{1}/lib/DEG2network.py -p 0.05 -n 5 -k\
-         /home/Public/software/rnaseq2report/lib/merged_KEGG.txt -i {0}/circ_results/Treat_vs_control_diff.txt -d \
-           {0}/circ_results/cytoscape'.format(outputdir,softpath))
+         /home/Public/software/rnaseq2report/lib/db/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+           {0}/results/cytoscape'.format(outputdir,softpath))
     elif genome.lower()=='mm9' or genome.lower()=='mm10':
         sh('{1}/lib/DEG2network_mouse.py -p 0.05 -n 5 -k\
-         /home/Public/software/rnaseq2report/lib/mouse_merged_KEGG.txt -i {0}/circ_results/Treat_vs_control_diff.txt -d \
-           {0}/circ_results/cytoscape'.format(outputdir,softpath))
+         /home/Public/software/rnaseq2report/lib/db/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+           {0}/results/cytoscape'.format(outputdir,softpath))
 
     ###! find is there other species
 

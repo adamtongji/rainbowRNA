@@ -15,20 +15,19 @@ Annotationfile:/home/Public/igenome/Homo_sapiens/UCSC/hg19/Annotation/Genes/gene
 Max_process:2
 
 ## feature-count settings, run numbers of htseq-count simultaneously. Default is sum of treat and control
-
 feature_count_path:featureCounts
 
 ## DESeq2 settings:
 ## for 2 vs 2, recommend p = 0.05, for at least 3 vs 3, recommend p = 0.01 or smaller
-pvalue:0.05
+pvalue:0.1
 
 
 ## User-defined settings
-Outputdir:/scratch/fusl/new_pipe_test/standard
+Outputdir:/scratch/fusl/new_pipe_test/circ/
 ##full=from fastq to report,mapping=star+htseq,de_only=deseq2,de_full=deseq2+gsea+pathway
 ## circRNA_full = circRNA_mapping + circRNA_process
-Runtype:full
+Runtype:circRNA_full
 # If you do not start from fastq file, please set it "False"
 Inputcheck:True
 ### de_only and de_full settings(delete next line or keep same format if start from mapping
-Expr_dir:/scratch/fusl/new_pipe_test/standard/expr
+Expr_dir:/scratch/fusl/new_pipe_test/circ/expr
