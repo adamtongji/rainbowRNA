@@ -6,20 +6,20 @@ import os,sys
 class ConfigParser(object):
 
     def __init__(self):
-        self.configs = {}
-        self.preset = {"mapping":{"Treat":None,"Control":None,"HISAT2_path":None,
+        self.__configs = {}
+        self.__preset = {"mapping":{"Treat":None,"Control":None,"HISAT2_path":None,
                                   "HISAT2_index":None,"Seqtype":None,"Inputcheck":None
-                                  ,"Outputdir":None,"Max_process":None,"Annotaionfile":None,
+                                  ,"Outputdir":None,"Max_process":None,"Annotationfile":None,
                                   "feature_count_path":None,},
                        "deseq":{"Pair_rep":None,"pvalue":None,"Outputdir":None,
                                 "Expr_dir":None},
                        "downstream":{"Outputdir":None,"Genome":None},
                        "circ_mapping":{"Treat":None,"Control":None,"Seqtype":None,
                                        "Inputcheck":None,"Outputdir":None,"Genomefile":None,
-                                       "Max_process":None},
-                       "circ_processing":{"Outputdir":None,"Pair_rep":None,"pvalue":None,
+                                       "Max_process":None,"Annotationfile":None},
+                       "circ_process":{"Outputdir":None,"Pair_rep":None,"pvalue":None,
                                           "Genomefile": None,"Genome":None,"Treat":None,
-                                          "Annotaionfile":None}
+                                          "Annotationfile":None}
         }
 
     def __runtype_config(self,_runtype):
@@ -28,21 +28,21 @@ class ConfigParser(object):
             sys.exit(1)
         self.runtype = _runtype
         for _type in self.runtype:
-            self.configs[_type] = {}
+            self.__configs[_type] = {}
 
     def __single_config(self, _runtype,param, val):
         if not _runtype in self.runtype:
             print "Omit {} paramters: {}".format(_runtype,param)
         else:
-            self.configs[_runtype][param] = val
+            self.__configs[_runtype][param] = val
             print "{} paramters {} is {}".format(_runtype,param,val)
 
     def __multi_config(self, _runtype, param, val):
         if not _runtype in self.runtype:
             print "Omit {} paramters: {}".format(_runtype, param)
         else:
-            self.configs[_runtype][param] = ",".split(val)
-            print "{} paramters {} is {}".format(_runtype, param, '\t'.join(val))
+            self.__configs[_runtype][param] = val.split(",")
+            print "{} paramters {} is {}".format(_runtype, param, val)
 
     # dump is used for debugging
     def load_configs(self,configfile="config.txt"):
@@ -51,17 +51,17 @@ class ConfigParser(object):
             if ":" in _line[:40] and _line.split(":")[0]=="Runtype":
                 mode = _line.split(":")[1].lower()
                 if mode == "full":
-                    runtype = ("mapping", "expr", "deseq", "downstream")
+                    runtype = ("mapping", "deseq", "downstream")
                 elif mode =="de_full":
                     runtype = ("deseq", "downstream")
                 elif mode == "mapping":
-                    runtype = ("mapping", "expr")
+                    runtype = ("mapping")
                 elif mode == "de_only":
                     runtype = ("deseq")
                 elif mode == "circ_full":
                     runtype = ("circ_mapping","circ_process")
                 elif "circ" in mode:
-                    runtype = (mode)
+                    runtype = tuple([mode])
                 else:
                     print "Error in runtype!"
                     sys.exit(1)
@@ -71,12 +71,12 @@ class ConfigParser(object):
                 _key = _line.split(":")[0]
                 _value = _line.split(":")[1]
                 for _type in runtype:
-                    if self.preset[_type].has_key(_key):
+                    if self.__preset[_type].has_key(_key):
                         if "," in _value:
                             self.__multi_config(_type,_key,_value)
                         else:
-                            self.__single_config(type,_key,_value)
-        Configs = self.configs
+                            self.__single_config(_type,_key,_value)
+        Configs = self.__configs
         for _type in runtype:
             for _key,_val in Configs[_type].iteritems():
                 if _val is None:
@@ -86,13 +86,14 @@ class ConfigParser(object):
 
 
 def input_check(*files):
-    for _files in files:
+    for _files in files[0]:
         if _files.endswith("gz"):
             print "Please uncompress the gzip file!"
             sys.exit(1)
         elif _files.endswith("fastq") or _files.endswith("fq"):
-            pass
+            continue
         else:
+            print _files
             print "Unknown input format"
             sys.exit(1)
 

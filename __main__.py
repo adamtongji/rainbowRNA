@@ -48,7 +48,7 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
         os.makedirs('{0}/expr/'.format(Outputdir))
 
     data_type = Seqtype[0]
-    pool = Pool(processes= Max_process)
+    pool = Pool(processes= int(Max_process))
     result = []
     if data_type.lower() == "pair_end" or data_type.lower() =="pairend":
         for index in range(0, len(Treat), 2):
@@ -56,32 +56,34 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
             outprefix = "treat{0}".format(str((index / 2) + 1))
             result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index, Outputdir,
                                                             outprefix, treatment[0], treatment[1],
-                                                            Annotationfile, feature_count_path,)))
+                                                            Annotationfile, feature_count_path, Seqtype[1],)))
 
         for index in range(0, len(Control), 2):
             controls = Control[index:index + 2]
-            outprefix = "mapping/control{0}".format(str((index / 2) + 1))
-            result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index,
+            outprefix = "control{0}".format(str((index / 2) + 1))
+            result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index, Outputdir,
                                                             outprefix, controls[0], controls[1],
-                                                            Annotationfile, feature_count_path,)))
+                                                            Annotationfile, feature_count_path, Seqtype[1],)))
 
     elif data_type.lower() == "single_end" or data_type.lower() =="singleend":
         for index in range(len(Treat)):
             treatment = Treat[index]
             outprefix = "treat{0}".format(str(index + 1))
-            result.append(pool.apply_async(hisat2_single_run,(HISAT2_path, HISAT2_index,
+            result.append(pool.apply_async(hisat2_single_run, (HISAT2_path, HISAT2_index,
                                                               Outputdir, outprefix, treatment,
-                                                              Annotationfile, feature_count_path,)))
+                                                              Annotationfile, feature_count_path, Seqtype[1],)))
         for index in range(len(Control)):
             controls = Control[index]
             outprefix = "control{0}".format(str(index + 1))
-            result.append(pool.apply_async(hisat2_single_run(HISAT2_path, HISAT2_index,
+            result.append(pool.apply_async(hisat2_single_run,(HISAT2_path, HISAT2_index,
                                                              Outputdir, outprefix, controls,
-                                                             Annotationfile, feature_count_path,)))
+                                                             Annotationfile, feature_count_path, Seqtype[1],)))
 
     else:
         print "Unidentified library type!"
         sys.exit(1)
+    pool.close()
+    pool.join()
 
 
 @time_func
@@ -108,7 +110,7 @@ def downstream_main(Outputdir, Genome):
     else:
         sh('rm -rf {0}/results/gsea/'.format(Outputdir))
         os.makedirs('{0}/results/gsea/'.format(Outputdir))
-    gsea_file = [i.rstrip().split('\t') for i in open('{0}/results/Treat_vs_control_diff.txt'.format(outputdir))]
+    gsea_file = [i.rstrip().split('\t') for i in open('{0}/results/Treat_vs_control_diff.txt'.format(Outputdir))]
     gsea_file = [i[:1] + i[4:5] for i in gsea_file]
     gsea_file = gsea_file[1:]
     gsea_file2 = []
@@ -136,12 +138,13 @@ def downstream_main(Outputdir, Genome):
         sh('mkdir {0}/results/cytoscape'.format(Outputdir))
     if Genome.lower() == 'hg19' or Genome.lower() == 'hg38':
         sh('{1}/lib/DEG2network.py -p 0.05 -n 5 -k\
-         {1}/lib/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+         {1}/lib/db/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(Outputdir,SOFT_PATH))
     elif Genome.lower() == 'mm9' or Genome.lower() == 'mm10':
         sh('{1}/lib/DEG2network_mouse.py -p 0.05 -n 5 -k\
-         {1}/lib/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+         {1}/lib/db/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(Outputdir,SOFT_PATH))
+    get_report(Outputdir)
 
 
 @time_func
@@ -154,21 +157,34 @@ def circ_mapping_main(Genomefile,Treat, Control,Outputdir, Seqtype,
     if not os.path.exists('{0}/ciri_out/'.format(Outputdir)):
         os.makedirs('{0}/ciri_out/'.format(Outputdir))
     data_type = Seqtype[0]
-    pool = Pool(processes=Max_process)
+    pool = Pool(processes=int(Max_process))
     result =[]
     if data_type.lower() =="pair_end" or data_type.lower() =="pairend":
-        result.append(pool.apply_async(ciri_run, (Outputdir, Genomefile, Annotationfile,
-                                                  Treat,)))
-        result.append(pool.apply_async(ciri_run, (Outputdir, Genomefile, Annotationfile,
-                                                  Control,)))
+        for index in range(0, len(Treat), 2):
+            treatment = Treat[index:index + 2]
+            outprefix = "{1}/ciri_out/treat{0}".format(str((index / 2) + 1),Outputdir)
+            result.append(pool.apply_async(ciri_run, (outprefix, Genomefile, Annotationfile,
+                                                      treatment[0],treatment[1],)))
+
+        for index in range(0, len(Control), 2):
+            controls = Control[index:index + 2]
+            outprefix = "{1}/ciri_out/control{0}".format(str((index / 2) + 1),Outputdir)
+            result.append(pool.apply_async(ciri_run, (outprefix, Genomefile, Annotationfile,
+                                                      controls[0],controls[1],)))
+    else:
+        print "error in data type!"
+        sys.exit(1)
+
     pool.close()
     pool.join()
+
 
 
 @time_func
 def circ_process_main(Outputdir, Pair_rep, pvalue,Annotationfile,Genome,Genomefile,Treat):
     Num_of_rep = int(len(Treat)/2)
     ciri_process(Outputdir,Num_of_rep, Pair_rep,pvalue,SOFT_PATH,Annotationfile,Genomefile,Genome)
+    get_ciri_report(Outputdir)
 
 
 @time_dec
@@ -196,12 +212,12 @@ def main():
                          }
 
     for subcom in command:
-        command_functions[subcom](**paramter)
+        command_functions[subcom](**paramter[subcom])
 
 
 if __name__=="__main__":
-    SOFT_PATH="/home/Public/software/rainbowRNA"
     global SOFT_PATH
+    SOFT_PATH="/home/Public/software/rainbowRNA"
     main()
 
 
