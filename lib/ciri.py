@@ -9,11 +9,12 @@ def sh(args):
 
 
 def ciri_run(outprefix,genomefile,annotationfile, *files):
+
     if len(files)!=2:
         print "error in ciri_run! exit"
         sys.exit(1)
-    sh("bwa mem {0} {1} {2} -t 8 -T 19 -v 1 > {3}.sam".format(genomefile,files[0],files[1], outprefix))
-    sh("CIRI2 -T 8 -I {0}.sam -O {0}.txt -F {1} -A {2}".format(outprefix, genomefile, annotationfile))
+    sh("bwa mem {0} {1} {2} -t 4 -T 19 -v 1 > {3}.sam".format(genomefile,files[0],files[1], outprefix))
+    sh("CIRI2 -T 4 -I {0}.sam -O {0}.txt -F {1} -A {2}".format(outprefix, genomefile, annotationfile))
 
 
 def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genomefile,genome="hg19"):
@@ -72,7 +73,7 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
          | cut -f 4,5,7,11| awk '{1}' | uniq > {0}/results/annotation_table_circbase.txt"\
            .format(outputdir, awk_arg, genome, softpath))
 
-    sh("Rscript {4}/lib/circ_deseq.r {0}/expr/ {1} {2} {3}"\
+    sh("Rscript {4}/rscript/circ_deseq.r {0}/expr/ {1} {2} {3}"\
        .format(outputdir, nrep, pairtype, pvalue, softpath))
     # make circ_down and up to bed format
     up_file=[i.rstrip() for i in open("{0}/results/circ_up.txt".format(outputdir))]
@@ -159,9 +160,9 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
 
     # start with hg19 only first
     if genome.lower()=='hg19' or genome.lower()=='hg38':
-        sh("Rscript /home/Public/software/rnaseq2report/lib/pathway.r {0}/results/".format(outputdir))
+        sh("Rscript {1}/rscript/pathway.r {0}/results/".format(outputdir,softpath))
     if genome.lower()=='mm9' or genome.lower()=='mm10':
-        sh("Rscript /home/Public/software/rnaseq2report/lib/mouse_pathway.r {0}/results".format(outputdir))
+        sh("Rscript {1}/rscript/mouse_pathway.r {0}/results".format(outputdir,softpath))
 
     ## RBP binding with circ and gene
     with open("{0}/results/circ_up.bed".format(outputdir),"w") as f:
@@ -218,11 +219,11 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
         sh('mkdir {0}/results/cytoscape'.format(outputdir))
     if genome.lower()=='hg19' or genome.lower()=='hg38':
         sh('{1}/lib/DEG2network.py -p 0.05 -n 5 -k\
-         /home/Public/software/rnaseq2report/lib/db/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+         {1}/lib/db/merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(outputdir,softpath))
     elif genome.lower()=='mm9' or genome.lower()=='mm10':
         sh('{1}/lib/DEG2network_mouse.py -p 0.05 -n 5 -k\
-         /home/Public/software/rnaseq2report/lib/db/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
+         {1}/lib/db/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(outputdir,softpath))
 
     ###! find is there other species

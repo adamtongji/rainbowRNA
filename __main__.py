@@ -48,7 +48,7 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
         os.makedirs('{0}/expr/'.format(Outputdir))
 
     data_type = Seqtype[0]
-    pool = Pool(processes= Max_process)
+    pool = Pool(processes= int(Max_process))
     result = []
     if data_type.lower() == "pair_end" or data_type.lower() =="pairend":
         for index in range(0, len(Treat), 2):
@@ -60,8 +60,8 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
 
         for index in range(0, len(Control), 2):
             controls = Control[index:index + 2]
-            outprefix = "mapping/control{0}".format(str((index / 2) + 1))
-            result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index,
+            outprefix = "control{0}".format(str((index / 2) + 1))
+            result.append(pool.apply_async(hisat2_pair_run,(HISAT2_path, HISAT2_index, Outputdir,
                                                             outprefix, controls[0], controls[1],
                                                             Annotationfile, feature_count_path, Seqtype[1],)))
 
@@ -82,6 +82,8 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
     else:
         print "Unidentified library type!"
         sys.exit(1)
+    pool.close()
+    pool.join()
 
 
 @time_func
@@ -108,7 +110,7 @@ def downstream_main(Outputdir, Genome):
     else:
         sh('rm -rf {0}/results/gsea/'.format(Outputdir))
         os.makedirs('{0}/results/gsea/'.format(Outputdir))
-    gsea_file = [i.rstrip().split('\t') for i in open('{0}/results/Treat_vs_control_diff.txt'.format(outputdir))]
+    gsea_file = [i.rstrip().split('\t') for i in open('{0}/results/Treat_vs_control_diff.txt'.format(Outputdir))]
     gsea_file = [i[:1] + i[4:5] for i in gsea_file]
     gsea_file = gsea_file[1:]
     gsea_file2 = []
@@ -155,15 +157,27 @@ def circ_mapping_main(Genomefile,Treat, Control,Outputdir, Seqtype,
     if not os.path.exists('{0}/ciri_out/'.format(Outputdir)):
         os.makedirs('{0}/ciri_out/'.format(Outputdir))
     data_type = Seqtype[0]
-    pool = Pool(processes=Max_process)
+    pool = Pool(processes=int(Max_process))
     result =[]
     if data_type.lower() =="pair_end" or data_type.lower() =="pairend":
-        result.append(pool.apply_async(ciri_run, (Outputdir, Genomefile, Annotationfile,
-                                                  Treat,)))
-        result.append(pool.apply_async(ciri_run, (Outputdir, Genomefile, Annotationfile,
-                                                  Control,)))
+        for index in range(0, len(Treat), 2):
+            treatment = Treat[index:index + 2]
+            outprefix = "{1}/ciri_out/treat{0}".format(str((index / 2) + 1),Outputdir)
+            result.append(pool.apply_async(ciri_run, (outprefix, Genomefile, Annotationfile,
+                                                      treatment[0],treatment[1],)))
+
+        for index in range(0, len(Control), 2):
+            controls = Control[index:index + 2]
+            outprefix = "{1}/ciri_out/control{0}".format(str((index / 2) + 1),Outputdir)
+            result.append(pool.apply_async(ciri_run, (outprefix, Genomefile, Annotationfile,
+                                                      controls[0],controls[1],)))
+    else:
+        print "error in data type!"
+        sys.exit(1)
+
     pool.close()
     pool.join()
+
 
 
 @time_func
@@ -198,12 +212,12 @@ def main():
                          }
 
     for subcom in command:
-        command_functions[subcom](**paramter)
+        command_functions[subcom](**paramter[subcom])
 
 
 if __name__=="__main__":
-    SOFT_PATH="/home/Public/software/rainbowRNA"
     global SOFT_PATH
+    SOFT_PATH="/home/Public/software/rainbowRNA"
     main()
 
 
