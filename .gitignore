@@ -15,7 +15,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-history
+/history
 lib64/
 parts/
 sdist/
@@ -89,6 +89,6 @@ ENV/
 .ropeproject
 
 # Other files
-.docx
-.DS_Store
-.idea
+*.docx
+/.DS_Store
+/.idea
