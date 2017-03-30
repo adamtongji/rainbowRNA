@@ -1,2 +1,27 @@
-# python
+# python2.7.5 or higher
 # pip
+
+# R(3.2 or higher)
+# DESeq2
+# pheatmap
+# org.Mm.eg.db
+# org.Hs.eg.db
+# GOstats
+# Category
+# KEGG.db
+# GO.db
+# pathview
+# ggplot2
+# reshape2
+
+## software
+# hisat2
+# feature-count
+# CIRI2
+# bedtools
+# targetscan
+# gsea
+
+## Other database
+# IGENOME(UCSC)
+# hisat2 index

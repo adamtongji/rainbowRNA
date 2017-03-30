@@ -2,9 +2,9 @@
 #coding:utf-8
 from optparse import OptionParser
 
-parser = OptionParser(usage = """python /Users/wangcy/Desktop/signal_network/DEG2network.py -h \
-python /Users/wangcy/Desktop/signal_network/DEG2network.py -i /Users/wangcy/Desktop/signal_network/CS_MF_L_diff.txt -p 0.05 -n 5 -k /Users/wangcy/Desktop/signal_network/merged_KEGG.txt -d /Users/wangcy/Desktop/signal_network""")
-parser.add_option("-i","--input",dest="input_DEG",type="str",\
+parser = OptionParser(usage = """
+python DEG2network.py -i sample_diff.txt -p 0.05 -n 5 -k mouse_merged_KEGG.txt -d signal_network""")
+parser.add_option("-i","--input",dest="input_DEG",type="str",
                   help="""-i directs to your differentially expressed file whose prototype is generated from DEseq2.\
                    The original differentally expressed genes file given by Deseq2 should be open with excel and then\
                     re-save in the format with delimiter "\\t". e.g. The input format should be as follows if you read\
