@@ -18,7 +18,7 @@ v1.0.2
 Add support to circRNA, need to add samtools path for different version of samtools
 
 v1.0.3
-Update with hisat2 and featurecounts, take exon regions for targetscan in circRNA mode
+Update with featurecounts, take exon regions for targetscan in circRNA mode
 Version: v1.0.3
 """
 import os,sys
@@ -26,6 +26,7 @@ from lib.decorator import time_dec,time_func
 from lib.IO.reportIO import get_report, get_ciri_report
 from lib.IO.inputIO import ConfigParser, input_check
 from lib.hisat2 import hisat2_single_run, hisat2_pair_run
+from lib.star import star_pair_run, star_single_run, starindex
 from lib.ciri import ciri_run, ciri_process
 from multiprocessing import Pool
 import subprocess
@@ -87,6 +88,61 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
 
 
 @time_func
+def mapping_main2(STARpath, STARindex, STARindexdir,Treat, Control,Outputdir, Seqtype,
+                 Inputcheck,Max_process, Annotationfile, feature_count_path, Genomefile, ReadLength):
+    if Inputcheck:
+        input_check(Treat, Control)
+    if not os.path.exists(Outputdir):
+        os.makedirs(Outputdir)
+    if not os.path.exists('{0}/mapping/'.format(Outputdir)):
+        os.makedirs('{0}/mapping/'.format(Outputdir))
+    if not os.path.exists('{0}/expr/'.format(Outputdir)):
+        os.makedirs('{0}/expr/'.format(Outputdir))
+
+    if STARindex.lower()=="false":
+        starindex(STARpath, STARindexdir, Genomefile,Annotationfile,ReadLength)
+
+    data_type = Seqtype[0]
+    pool = Pool(processes=int(Max_process))
+    result = []
+    if data_type.lower() == "pair_end" or data_type.lower() == "pairend":
+        for index in range(0, len(Treat), 2):
+
+            treatment = Treat[index:index + 2]
+            outprefix = "treat{0}".format(str((index / 2) + 1))
+            result.append(pool.apply_async(star_pair_run, (STARpath, STARindexdir, Outputdir,
+                                                             outprefix, treatment[0], treatment[1],
+                                                             Annotationfile, feature_count_path, Seqtype[1],)))
+
+        for index in range(0, len(Control), 2):
+            controls = Control[index:index + 2]
+            outprefix = "control{0}".format(str((index / 2) + 1))
+            result.append(pool.apply_async(star_pair_run, (STARpath, STARindexdir, Outputdir,
+                                                             outprefix, controls[0], controls[1],
+                                                             Annotationfile, feature_count_path, Seqtype[1],)))
+
+    elif data_type.lower() == "single_end" or data_type.lower() == "singleend":
+        for index in range(len(Treat)):
+            treatment = Treat[index]
+            outprefix = "treat{0}".format(str(index + 1))
+            result.append(pool.apply_async(star_single_run, (STARpath, STARindexdir,
+                                                               Outputdir, outprefix, treatment,
+                                                               Annotationfile, feature_count_path, Seqtype[1],)))
+        for index in range(len(Control)):
+            controls = Control[index]
+            outprefix = "control{0}".format(str(index + 1))
+            result.append(pool.apply_async(star_single_run, (STARpath, STARindexdir,
+                                                               Outputdir, outprefix, controls,
+                                                               Annotationfile, feature_count_path, Seqtype[1],)))
+
+    else:
+        print "Unidentified library type!"
+        sys.exit(1)
+    pool.close()
+    pool.join()
+
+
+@time_func
 def deseq_main(Outputdir, Pair_rep, pvalue,Expr_dir=None):
     if Expr_dir is None:
         Expr_dir = "{}/expr".format(Outputdir)
@@ -95,16 +151,16 @@ def deseq_main(Outputdir, Pair_rep, pvalue,Expr_dir=None):
         os.makedirs('{0}/results/up'.format(Outputdir))
         os.makedirs('{0}/results/down'.format(Outputdir))
 
-    sh("Rscript {}/rscript/deseq2.r {} {} {}"\
+    sh("Rscript {}/rscript/deseq2.r {} {} {} &>>deseq.log"\
        .format(SOFT_PATH, Expr_dir,  Pair_rep, pvalue))
 
 
 @time_func
 def downstream_main(Outputdir, Genome):
     if Genome.lower() == 'hg19' or Genome.lower() == 'hg38':
-        sh("Rscript {1}/rscript/pathway.r {0}/results/".format(Outputdir,SOFT_PATH))
+        sh("Rscript {1}/rscript/pathway.r {0}/results/ &>pathway.log".format(Outputdir,SOFT_PATH))
     if Genome.lower() == 'mm9' or Genome.lower() == 'mm10':
-        sh("Rscript {1}/rscript/mouse_pathway.r {0}/results".format(Outputdir,SOFT_PATH))
+        sh("Rscript {1}/rscript/mouse_pathway.r {0}/results &>pathway.log".format(Outputdir,SOFT_PATH))
     if not os.path.exists('{0}/results/gsea/'.format(Outputdir)):
         os.makedirs('{0}/results/gsea/'.format(Outputdir))
     else:
@@ -129,11 +185,11 @@ def downstream_main(Outputdir, Genome):
     sh("export LANG=en_US.UTF-8;java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
          -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
           -rpt_label bp -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-           -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false".format(Outputdir))
+           -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>gsea.log".format(Outputdir))
     sh("export LANG=en_US.UTF-8; java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
          -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
           -rpt_label kegg -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-         -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false".format(Outputdir))
+         -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>>gsea.log".format(Outputdir))
     if not os.path.exists('{0}/results/cytoscape/'.format(Outputdir)):
         sh('mkdir {0}/results/cytoscape'.format(Outputdir))
     if Genome.lower() == 'hg19' or Genome.lower() == 'hg38':

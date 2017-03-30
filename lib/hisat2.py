@@ -12,7 +12,7 @@ def sh(args):
 def hisat2_single_run(hisat2_path, hisat2_index, outputdir, outprefix,files,
                        Annotationfile, feature_count_path, libtype):
 
-    sh("{0} -p 4 -x {1} -1 {2} -t -q -S {3}/mapping/{4}.sam 1>/dev/null 2>{3}/mapping/{4}_log.txt"\
+    sh("{0} -p 4 -x {1} -U {2} -t -q -S {3}/mapping/{4}.sam 1>/dev/null 2>{3}/mapping/{4}_log.txt"\
            .format(hisat2_path, hisat2_index, files, outputdir,outprefix))
     if libtype == "strand-specific" or libtype == "strandspecific":
         sh("{0} -s 1 -T 4 -t exon -g gene_id -a {1} -o {2}/mapping/{3}_count.txt {2}/mapping/{3}.sam" \

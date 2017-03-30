@@ -13,8 +13,8 @@ def ciri_run(outprefix,genomefile,annotationfile, *files):
     if len(files)!=2:
         print "error in ciri_run! exit"
         sys.exit(1)
-    sh("bwa mem {0} {1} {2} -t 4 -T 19 -v 1 > {3}.sam".format(genomefile,files[0],files[1], outprefix))
-    sh("CIRI2 -T 4 -I {0}.sam -O {0}.txt -F {1} -A {2}".format(outprefix, genomefile, annotationfile))
+    sh("bwa mem {0} {1} {2} -t 4 -T 19 -v 1 > {3}.sam ".format(genomefile,files[0],files[1], outprefix))
+    sh("CIRI2 -T 4 -I {0}.sam -O {0}.txt -F {1} -A {2} &>>ciri.log".format(outprefix, genomefile, annotationfile))
 
 
 def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genomefile,genome="hg19"):
@@ -73,7 +73,7 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
          | cut -f 4,5,7,11| awk '{1}' | uniq > {0}/results/annotation_table_circbase.txt"\
            .format(outputdir, awk_arg, genome, softpath))
 
-    sh("Rscript {4}/rscript/circ_deseq.r {0}/expr/ {1} {2} {3}"\
+    sh("Rscript {4}/rscript/circ_deseq.r {0}/expr/ {1} {2} {3} &>deseq.log"\
        .format(outputdir, nrep, pairtype, pvalue, softpath))
     # make circ_down and up to bed format
     up_file=[i.rstrip() for i in open("{0}/results/circ_up.txt".format(outputdir))]
@@ -160,9 +160,9 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
 
     # start with hg19 only first
     if genome.lower()=='hg19' or genome.lower()=='hg38':
-        sh("Rscript {1}/rscript/pathway.r {0}/results/".format(outputdir,softpath))
+        sh("Rscript {1}/rscript/pathway.r {0}/results/ &>pathway.log".format(outputdir,softpath))
     if genome.lower()=='mm9' or genome.lower()=='mm10':
-        sh("Rscript {1}/rscript/mouse_pathway.r {0}/results".format(outputdir,softpath))
+        sh("Rscript {1}/rscript/mouse_pathway.r {0}/results &>pathway.log".format(outputdir,softpath))
 
     ## RBP binding with circ and gene
     with open("{0}/results/circ_up.bed".format(outputdir),"w") as f:
@@ -208,11 +208,11 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
     sh("export LANG=en_US.UTF-8;java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
      -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
       -rpt_label bp -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-       -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false".format(outputdir))
+       -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>gsea.log".format(outputdir))
     sh("export LANG=en_US.UTF-8; java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
      -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
       -rpt_label kegg -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-     -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false".format(outputdir))
+     -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>>gsea.log".format(outputdir))
 
     # step 4 cytoscape
     if not os.path.exists('{0}/results/cytoscape/'.format(outputdir)):

@@ -35,6 +35,28 @@ def const():
     sys.modules[__name__] = _const()
 
 
+def trans_time(TITLE,seconds):
+    print "\033[1;32;38m"
+    print "#" * 50
+    print TITLE + ' ends at ' + \
+          time.strftime("%Y-%m-%d %X", time.localtime()) + '...'
+
+    hour = int(seconds / 3600)
+    mins = int((seconds - 3600 * hour) / 60)
+    sec = seconds - 3600 * hour - 60 * mins
+    if int(hour) > 0:
+        print "Totally \t{0}hours {1}minutes {2:.4}seconds lapsed"\
+        .format(hour, mins, sec)
+    elif int(mins) >0:
+        print "Totally \t{0}minutes {1:.4}seconds lapsed" \
+            .format( mins, sec)
+    else:
+        print "Totally \t{0:.4}seconds lapsed" \
+            .format(sec)
+    print "#" * 50
+    print "\033[0m"
+
+
 def time_dec(func):
     @wraps(func)
     def _time_dec(*args, **kwargs):
@@ -42,8 +64,9 @@ def time_dec(func):
         const.AUTHOR = os.popen("whoami").read().rstrip()
         const.TEMPLATEDATE = 'Dec 22, 2016'
         const.CODEFUNCTION = 'This program is for rnaseq.'
-        begin_time = time.clock()
-        print "\033[1;31;38m"
+        # begin_time = time.clock()
+        begin_time = time.time()
+        print "\033[1;32;38m"
         print "#" * 50
         print 'User ' + const.AUTHOR + ':'
         print const.TITLE + ' runs at ' + \
@@ -53,16 +76,10 @@ def time_dec(func):
         print "#" * 50
         print "\033[0m"
         res = func(*args, **kwargs)
-        end_time = time.clock()
+        end_time = time.time()
         lapsed_time = end_time - begin_time
 
-        print "\033[1;31;38m"
-        print "#" * 50
-        print const.TITLE + ' ends at ' + \
-              time.strftime("%Y-%m-%d %X", time.localtime()) + '...'
-        print "Totally \t%.03f seconds lapsed" % lapsed_time
-        print "#" * 50
-        print "\033[0m"
+        trans_time(const.TITLE, lapsed_time)
 
         return res
 
@@ -72,9 +89,9 @@ def time_dec(func):
 def time_func(func):
     @wraps(func)
     def _time_func(*args, **kwargs):
-        start= time.clock()
+        start= time.time()
         res = func(*args, **kwargs)
-        end = time.clock()
+        end = time.time()
         lapse = end - start
         print "{} takes {} seconds.".format(func.__name__, lapse)
         return res

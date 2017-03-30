@@ -14,6 +14,7 @@ Genomefile:/home/Public/igenome/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta
 Annotationfile:/home/Public/igenome/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
 Max_process:4
 
+
 ## feature-count settings, run numbers of htseq-count simultaneously. Default is sum of treat and control
 feature_count_path:featureCounts
 

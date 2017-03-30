@@ -10,7 +10,8 @@ class ConfigParser(object):
         self.__preset = {"mapping":{"Treat":None,"Control":None,"HISAT2_path":None,
                                   "HISAT2_index":None,"Seqtype":None,"Inputcheck":None
                                   ,"Outputdir":None,"Max_process":None,"Annotationfile":None,
-                                  "feature_count_path":None,},
+                                  "feature_count_path":None,"Genomefile":None,"ReadLength":None,
+                                    "STARpath":None, "STARindex":None, "STARindexdir":None},
                        "deseq":{"Pair_rep":None,"pvalue":None,"Outputdir":None,
                                 "Expr_dir":None},
                        "downstream":{"Outputdir":None,"Genome":None},
@@ -88,8 +89,9 @@ class ConfigParser(object):
 def input_check(*files):
     for _files in files[0]:
         if _files.endswith("gz"):
-            print "Please uncompress the gzip file!"
-            sys.exit(1)
+            # print "If your run ciri,please uncompress the gzip file ^_^"
+            pass
+            # sys.exit(1)
         elif _files.endswith("fastq") or _files.endswith("fq"):
             continue
         else:
