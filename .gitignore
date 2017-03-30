@@ -90,5 +90,6 @@ ENV/
 
 # Other files
 *.docx
-/.DS_Store
+.DS_Store
 /.idea
+/test
