@@ -21,6 +21,7 @@
 # bedtools
 # targetscan
 # gsea
+# bwa
 
 ## Other database
 # IGENOME(UCSC)

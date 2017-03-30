@@ -179,7 +179,7 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
             print >> f, line
     if genome.lower() == 'hg19' or genome.lower() == 'hg38':
         sh("bash {1}/lib/RBP_count.sh\
-         {0}/results/circ_down.bed {0}/results/ciri_down_RBP.txt".format(outputdir,softpath))
+         {0}/results/circ_down.bed {0}/results/ciri_down_RBP.txt {1}".format(outputdir,softpath))
         sh("bash {1}/lib/RBP_count.sh\
             {0}/results/circ_up.bed {0}/results/ciri_up_RBP.txt".format(outputdir,softpath))
 

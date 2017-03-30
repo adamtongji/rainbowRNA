@@ -1,7 +1,8 @@
 #!/bin/bash
 genes=$1
 outfile=$2
-cd /home/Public/software/rnaseq2report/lib/db/RBP_binding_sites
+softpath=$3
+cd ${softpath}/lib/db/RBP_binding_sites
 rbpfile=`ls`
 for file in ${rbpfile}; do
     filepref=${file%.txt}
