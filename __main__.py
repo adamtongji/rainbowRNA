@@ -88,7 +88,7 @@ def mapping_main(HISAT2_path, HISAT2_index, Treat, Control,Outputdir, Seqtype,
 
 
 @time_func
-def mapping_main2(STARpath, STARindex, STARindexdir,Treat, Control,Outputdir, Seqtype,
+def mapping_main_star(STARpath, STARindex, STARindexdir,Treat, Control,Outputdir, Seqtype,
                  Inputcheck,Max_process, Annotationfile, feature_count_path, Genomefile, ReadLength):
     if Inputcheck:
         input_check(Treat, Control)
