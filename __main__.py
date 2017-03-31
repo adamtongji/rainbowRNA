@@ -273,7 +273,7 @@ def main():
 
 if __name__=="__main__":
     global SOFT_PATH
-    SOFT_PATH="/home/Public/software/rainbowRNA"
+    SOFT_PATH="/home/adam/new_dir/jiayin/rainbowRNA"
     main()
 
 
