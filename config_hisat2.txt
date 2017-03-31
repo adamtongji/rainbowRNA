@@ -10,7 +10,7 @@ HISAT2_index:/home/Public/hisat_index/hg19_index/genome
 ## if you take "default", pipeline will use UCSC genomes and annotation(only support mouse and human.
 ## if you take "user", please give specific genome files and annotation files.
 Genome:hg19
-Genomefile:/home/Public/igenome/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+# remove genome file
 Annotationfile:/home/Public/igenome/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
 Max_process:4
 
