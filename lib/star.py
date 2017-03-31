@@ -10,6 +10,8 @@ def sh(args):
 
 
 def starindex(starpath, star_index, genome_file, annotation_file, readlength):
+    if not os.path.isdir(star_index):
+        os.makedirs(star_index)
     sh("{0} --runMode genomeGenerate --runThreadN 8 --genomeDir {1}\
      --genomeFastaFiles {2} --sjdbGTFfile {3} --sjdbOverhang {4}  &>>star.log"\
        .format(starpath, star_index,genome_file, annotation_file, str(int(readlength)-1)))
