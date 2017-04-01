@@ -43,9 +43,11 @@ def get_report(Outputdir):
     sh('mkdir {0}/final/phase1-AllExpGenes {0}/final/phase2-DiffExpGenes\
        {0}/final/phase3-GO_KEGG {0}/final/phase4-GSEA {0}/final/phase5-SignalNet'.format(Outputdir))
 
-    # sh('cp {0}/mapping/*_log.txt {0}/results/mapping_rate/'.format(Outputdir))
-    # STAR setting
-    sh('cp {0}/mapping/*.final.out {0}/results/mapping_rate/'.format(Outputdir))
+    if os.path.exists("{0}/mapping/*_log.txt".format(Outputdir)):
+        sh('cp {0}/mapping/*_log.txt {0}/results/mapping_rate/'.format(Outputdir))
+    else:
+        # STAR setting
+        sh('cp {0}/mapping/*.final.out {0}/results/mapping_rate/'.format(Outputdir))
     merge_mapping_rate(Outputdir)
     ####
 
