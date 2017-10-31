@@ -1,5 +1,11 @@
+# Environ
+# Flask
+# Virtualenv
+
 # python2.7.5 or higher
 # pip
+# flask
+# numpy
 
 # R(3.2 or higher)
 # DESeq2
@@ -13,6 +19,7 @@
 # pathview
 # ggplot2
 # reshape2
+# clusterProfiler
 
 ## software
 # hisat2
