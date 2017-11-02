@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <link rel="stylesheet" href="static/css/theme.css">
-        <script src="static/js/jquery-3.2.1.min.js"></script>
-        <script src="static/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../static/css/theme.css">
+        <script src="../static/js/jquery-3.2.1.min.js"></script>
+        <script src="../static/js/bootstrap.min.js"></script>
+
     <title>转录组结题报告</title>
 </head>
 
 <body>
-<div class="container">
+<div class="container" >
     <table width="100%" border="0" cellpadding="3" cellspacing="0">
     <tr>
       <td width="50%"><h2><b>rainbowRNA分析报告</b></h2></td>
-      <td width="12%"><img src="static/pic/images/logo.png" height="60" width="130" align="right"></td>
+      <td width="12%"><img src="../static/pic/images/logo.png" height="60" width="130" align="right"></td>
     </tr>
     <tr>
       <td width="20%" style="font-size:18px">转录组数据标准分析报告</td>
@@ -38,10 +39,11 @@
       项目概览 <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      <li><a href="#dropdown01" data-toggle="tab">建库测序流程</a></li>
-      <li><a href="#dropdown02" data-toggle="tab">生信分析流程</a></li>
+      <li><a href="#profile1" data-toggle="tab">建库测序流程</a></li>
+      <li><a href="#profile2" data-toggle="tab">生信分析流程</a></li>
     </ul>
   </li>
+
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
       mRNA-seq标准分析 <span class="caret"></span>
@@ -79,9 +81,9 @@
       Methods及参考文献<span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      <li><a href="#dropdown41" data-toggle="tab">中文版Methods</a></li>
-      <li><a href="#dropdown42" data-toggle="tab">英文版Methods</a></li>
+      <li><a href="#dropdown41" data-toggle="tab">英文版Methods</a></li>
       <li><a href="#dropdown43" data-toggle="tab">相关参考文献</a></li>
+      <li><a href="#dropdown42" data-toggle="tab">公司已发表文章</a></li>
     </ul>
   </li>
 
@@ -93,10 +95,10 @@
   <div class="tab-pane fade active in" id="home">
     <p>home</p>
   </div>
-  <div class="tab-pane fade" id="dropdown01">
+  <div class="tab-pane fade" id="profile1">
     <p>p1</p>
   </div>
-  <div class="tab-pane fade" id="dropdown02">
+  <div class="tab-pane fade" id="profile2">
     <p>p1</p>
   </div>
 
@@ -112,7 +114,7 @@
   <div class="tab-pane fade" id="dropdown14">
     <p>1</p>
   </div>
-    <div class="tab-pane fade" id="dropdown21">
+  <div class="tab-pane fade" id="dropdown21">
     <p>1</p>
   </div>
   <div class="tab-pane fade" id="dropdown22">
@@ -131,16 +133,30 @@
     <p>1</p>
   </div>
   <div class="tab-pane fade" id="dropdown41">
-     $(document).ready(function(){
-      $('#dropdown41').load('templates/method_ref.html')
-    }
-  </div>
-  <div class="tab-pane fade" id="dropdown42">
-    <p>2</p>
+    <script>
+    $(document).ready(function(){
+    $('#dropdown41').load('method_en.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="dropdown43">
-    <p>1</p>
+    <script>
+    $(document).ready(function(){
+    $('#dropdown41').load('reference.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown42">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown41').load('publications.html');
+    })
+    </script>
   </div>
 </div>
 </div>
-<li class="divider"></li>
+<footer>
+  <div class="container">
+  <li class="divider"></li>Copyright &copy; www.rainbow-genome.com
+  </div></footer>
+</body>
