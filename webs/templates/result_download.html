@@ -14,15 +14,18 @@
     <table width="100%" border="0" cellpadding="3" cellspacing="0">
     <tr>
       <td width="50%"><h2><b>rainbowRNA分析报告</b></h2></td>
-      <td width="12%"><img src="../static/pic/images/logo.png" height="60" width="130" align="right"></td>
+      <td width="12%"><img src="../static/pic/images/logo.png" height="52" width="110" align="right"></td>
     </tr>
     <tr>
       <td width="20%" style="font-size:18px">转录组数据标准分析报告</td>
-      <td width="30%" style="text-align:right;padding:0px;margin:0px;font-size:12px">
-        服务电话: 021-61539657<br>
+      <td width="30%" style="text-align:right;padding:0px;margin:0px;font-size:14px">
         <a href="http://www.rainbow-genome.com" target="_blank">
-          访问公司官网
-        </a>
+          访问官网: &nbsp;www.rainbow-genome.com
+          </a>
+        <br>
+          <a href="Mailto:marketing@rainbow-genome.com?CC=adam.tongji@gmail.com&Subject=转录组测序分析">Email:marketing@rainbow-genome.com</a>
+        <br>
+        技术服务热线: 021-61539657<br>
       </td>
     </tr>
     </table>
@@ -93,13 +96,25 @@
 <div class="container">
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade active in" id="home">
-    <p>home</p>
+    <script>
+    $(document).ready(function(){
+    $('#home').load('main_page.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="profile1">
-    <p>p1</p>
+    <script>
+    $(document).ready(function(){
+    $('#profile1').load('library_summary.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="profile2">
-    <p>p1</p>
+    <script>
+    $(document).ready(function(){
+    $('#profile2').load('analysis_summary.html');
+    })
+    </script>
   </div>
 
   <div class="tab-pane fade" id="dropdown11">
@@ -142,14 +157,14 @@
   <div class="tab-pane fade" id="dropdown43">
     <script>
     $(document).ready(function(){
-    $('#dropdown41').load('reference.html');
+    $('#dropdown43').load('reference.html');
     })
     </script>
   </div>
   <div class="tab-pane fade" id="dropdown42">
     <script>
     $(document).ready(function(){
-    $('#dropdown41').load('publications.html');
+    $('#dropdown42').load('publications.html');
     })
     </script>
   </div>
@@ -157,6 +172,14 @@
 </div>
 <footer>
   <div class="container">
-  <li class="divider"></li>Copyright &copy; www.rainbow-genome.com
+    <br>
+     <div style="border-bottom:1px solid #CCC"></div>
+
+  <table width="100%" border="0" cellpadding="3" cellspacing="0">
+    <tr>
+      <td width="30%" style="font-size:12px"> <p>Copyright &copy; 上海嘉因生物科技有限公司</p></td>
+      <td width="30%" align="right" style="font-size:12px"> <p align="right">地址：上海市杨浦区赤峰路65号611室</p></td>
+    </tr>
+    </table>
   </div></footer>
 </body>
