@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
         <link rel="stylesheet" href="../static/css/theme.css">
-        <script src="../static/js/jquery-3.2.1.min.js"></script>
-        <script src="../static/js/bootstrap.min.js"></script>
 
     <title>转录组结题报告</title>
 <style>
@@ -20,13 +18,17 @@ p.legend{
 </style>
 </head>
 <div class="container-fluid">
- <h3><b>2. &nbsp;测序数据格式</b></h3>
+ <h3><b>2. &nbsp;测序结果质量评估</b></h3>
  <h4><b>2.1 测序错误率分布检查</b></h4>
 
  <p> &emsp; 每个碱基测序错误率是通过测序Phred数值(Phred score, Qphred)通过公式（公式1 ：Qphred = -10log<sub>10</sub>(e)）转化得到，而Phred 数值是在碱基识别(Base Calling)过程中通过一种概率模型计算得到，这种模型可以准确地预测碱基判别的错误率。Phred分值，不正确的碱基识别率，碱基正确识别率以及Q-score的对应关系如下<b>表1</b>所显示：</p>
-
-<table class="table table-striped table-hover table-bordered"  style="text-align:middle">
-  <thead style="background-color:#67a9cf; font-color:black">
+<p class="legend"><b>表1 &nbsp;  质量与错误率对照</b></p>
+<div class="row">
+<div class="col-sm-1">
+        </div>
+  <div class="col-sm-9">
+<table class="table table-striped table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black;">
     <tr>
       <th><b>测序错误率(E)</b></th>
       <th><b>碱基正确识别率</b></th>
@@ -58,15 +60,27 @@ p.legend{
     </tr>
   </tbody>
 </table>
-
+</div>
+    </div>
 
 测序错误率与碱基质量有关，受测序仪本身、测序试剂、样品等多个因素共同影响。对于RNA-seq技术，测序错误率分布具有两个特点：<br>
 (1)测序错误率随着测序序列(Sequenced Reads)长度的增加而升高。这是由测序过程中化学试剂的消耗导致的，为Illumina高通量测序平台所具有的特征。<br>
 (2)前6个碱基具有较高的测序错误率，此长度恰好为RNA-seq建库过程中反转录所需的随机引物长度。前6个碱基测序错误率较高是因为随机引物和RNA模版的不完全结合(Jiang et al.)。<br>
-<h4><b>2.2 &nbsp;　碱基含量分布检查</b></h4>
-通过碱基分布示意图，图3.2.2，我们可以观测测序过程碱基均衡性，一般来说，因采用随机引物扩增但随机引物种类有限而导致reads的前10个碱基的比例不均衡，会出现波动是正常现象。在此波动之后的碱基互补配对原理GC及AT碱基对会分别均衡分布。<br>
+<img src="../static/pic/images/figure3.2.1.png" height="360" width="360" class="center">
+    <p class="legend"><b>图3.2.1 &nbsp;  测序错误率分布图</b></p>
+
+    <h4><b>2.2 &nbsp;　碱基含量分布检查</b></h4>
+通过碱基分布示意图，<b>图3.2.2</b>，我们可以观测测序过程碱基均衡性，一般来说，因采用随机引物扩增但随机引物种类有限而导致reads的前10个碱基的比例不均衡，会出现波动是正常现象。在此波动之后的碱基互补配对原理GC及AT碱基对会分别均衡分布。<br>
+<img src="../static/pic/images/figure3.2.2.png" height="360" width="360" class="center">
+    <p class="legend"><b>图3.2.2 &nbsp;  碱基分布示意图</b></p>
 
 <h4><b>2.3 Adapter Content分析</b></h4>
+
+<div class="row">
+  <div class="col-sm-6"><img src="../static/pic/images/figure3.2.3.1.png" height="300" width="360" class="center"></div>
+  <div class="col-sm-6"><img src="../static/pic/images/figure3.2.3.2.png" height="300" width="360" class="center"></div>
+</div>
+     <p class="legend"><b>图3.2.3 &nbsp; 接头去除前(左图)后(右图)Adapter Content统计图</b></p>
 
 注：<br>
 1、Adapter Content反映序列reads在每个接头序列文库的立即百分比率；<br>
@@ -80,6 +94,9 @@ p.legend{
 (1)	去除带接头(adapter)的reads；<br>
 (2)	去除N(N表示无法确定碱基信息)的比例大于10%的reads；<br>
 (3)	去除低质量reads(Qphred <= 20 的碱基数占整个 read 长度的 50％以上的 reads)。<br>
+
+    <img src="../static/pic/images/figure3.2.4.png" height="400" width="400" class="center">
+    <p class="legend"><b>图3.2.4 &nbsp;  原始数据组成</b></p>
 
 注：不同颜色的比例分别代表不同成分比例<br>
 

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link rel="stylesheet" href="../static/css/theme.css">
+
+    <title>转录组结题报告</title>
+<style>
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+p.legend{
+    text-align: center;
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<h3><b>3. &nbsp;参考序列比对</b></h3>
+<p>参考序列比对(Reads Mapping)是指将经过下机处理的原始数据(Sequenced Reads)比对到参考基因组上。嘉因生物采用主流分析软件STAR对RNA-seq测序数据进行比对分析。STAR采用Maximal Mappable Prefix（MMP）搜索方法，可以对junction reads进行精确定位，如下<b>图3.3.1</b>所示，其综合性能在同类比对软件中表现较为突出。
+</p>
+    <img src="../static/pic/images/figure3.3.1.png" height="350" width="420" class="center">
+ <p class="legend"><b>图3.3.1 &nbsp;  数据回帖原理</b></p>
+
+<h4><b>3.1 Reads与参考基因组比对情况统计</b></h4>
+<p class="legend"><b>表2 &nbsp;  参考序列比对结果统计表</b></p>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th></th>
+      <th><b>Control1</b></th>
+      <th><b>Control2</b></th>
+      <th><b>Control3</b></th>
+        <th><b>Treat1</b></th>
+      <th><b>Treat2</b></th>
+      <th><b>Treat3</b></th>
+    </tr>
+  </thead>
+  <tbody>
+
+<tr>
+<td style="text-align:right">Number of input reads |</td>
+<td>23,624,094</td>
+<td>23,967,327</td>
+<td>24,004,478</td>
+<td>21,566,180</td>
+<td>21,623,553</td>
+<td>21,555,629</td>
+</tr>
+<td style="text-align:right">  Average input read length |</td>
+<td>300</td>
+                <td>300</td>
+<td>300</td>
+<td>300</td>
+<td>300</td>
+<td>300</td>
+<tr>
+<td style="text-align:right">UNIQUE READS:</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">Uniquely mapped reads number |</td>
+<td>21894148</td>
+<td>21858030</td>
+<td>21986062</td>
+<td>19906147</td>
+<td>20067278</td>
+<td>19758528</td>
+</tr>
+<tr>
+<td style="text-align:right">Uniquely mapped reads % |</td>
+<td>92.68%</td>
+<td>91.20%</td>
+<td>91.59%</td>
+<td>92.30%</td>
+<td>92.80%</td>
+<td>91.66%</td>
+</tr>
+<tr>
+<td style="text-align:right">Average mapped length |</td>
+<td>296.92</td>
+<td>296.65</td>
+<td>296.56</td>
+<td>296.81</td>
+<td>297.05</td>
+<td>296.63</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of splices: Total |</td>
+<td>23702756</td>
+<td>23606514</td>
+<td>23938109</td>
+<td>21700625</td>
+<td>21958587</td>
+<td>21420931</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of splices: Annotated (sjdb) |</td>
+<td>23161183</td>
+<td>23113486</td>
+<td>23444298</td>
+<td>21214359</td>
+<td>21509837</td>
+<td>20962507</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of splices: GT/AG |</td>
+<td>23439822</td>
+<td>23352787</td>
+<td>23678758</td>
+<td>21464862</td>
+<td>21727207</td>
+<td>21193348</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of splices: GC/AG |</td>
+<td>207449</td>
+<td>201223</td>
+<td>205535</td>
+<td>188090</td>
+<td>184709</td>
+<td>180643</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of splices: AT/AC |</td>
+<td>18286</td>
+<td>17244</td>
+<td>17639</td>
+<td>15743</td>
+<td>16268</td>
+<td>15773</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of splices: Non-canonical |</td>
+<td>37199</td>
+<td>35260</td>
+<td>36177</td>
+<td>31930</td>
+<td>30403</td>
+<td>31167</td>
+</tr>
+<tr>
+<td style="text-align:right">Mismatch rate per base, % |</td>
+<td>0.31%</td>
+<td>0.36%</td>
+<td>0.38%</td>
+<td>0.33%</td>
+<td>0.35%</td>
+<td>0.36%</td>
+</tr>
+<tr>
+<td style="text-align:right">Deletion rate per base |</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+</tr>
+<tr>
+<td style="text-align:right">Deletion average length |</td>
+<td>2.16</td>
+<td>2.19</td>
+<td>2.14</td>
+<td>2.16</td>
+<td>2.11</td>
+<td>2.19</td>
+</tr>
+<tr>
+<td style="text-align:right">Insertion rate per base |</td>
+<td>0.02%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+<td>0.01%</td>
+</tr>
+<tr>
+<td style="text-align:right">Insertion average length |</td>
+<td>1.51</td>
+<td>1.53</td>
+<td>1.53</td>
+<td>1.51</td>
+<td>1.53</td>
+<td>1.53</td>
+</tr>
+<tr>
+<td style="text-align:right">MULTI-MAPPING READS:</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">Number of reads mapped to multiple loci |</td>
+<td>401512</td>
+<td>421307</td>
+<td>413327</td>
+<td>353764</td>
+<td>372265</td>
+<td>382722</td>
+</tr>
+<tr>
+<td style="text-align:right">% of reads mapped to multiple loci |</td>
+<td>1.70%</td>
+<td>1.76%</td>
+<td>1.72%</td>
+<td>1.64%</td>
+<td>1.72%</td>
+<td>1.78%</td>
+</tr>
+<tr>
+<td style="text-align:right">Number of reads mapped to too many loci |</td>
+<td>3546</td>
+<td>3865</td>
+<td>3874</td>
+<td>3315</td>
+<td>3129</td>
+<td>3567</td>
+</tr>
+<tr>
+<td style="text-align:right">% of reads mapped to too many loci |</td>
+<td>0.02%</td>
+<td>0.02%</td>
+<td>0.02%</td>
+<td>0.02%</td>
+<td>0.01%</td>
+<td>0.02%</td>
+</tr>
+<tr>
+<td style="text-align:right">UNMAPPED READS:</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:right">% of reads unmapped: too many mismatches |</td>
+<td>0.00%</td>
+<td>0.00%</td>
+<td>0.00%</td>
+<td>0.00%</td>
+<td>0.00%</td>
+<td>0.00%</td>
+</tr>
+<tr>
+<td style="text-align:right">% of reads unmapped: too short |</td>
+<td>5.57%</td>
+<td>6.99%</td>
+<td>6.63%</td>
+<td>6.00%</td>
+<td>5.42%</td>
+<td>6.50%</td>
+</tr>
+<tr>
+<td style="text-align:right">% of reads unmapped: other |</td>
+<td>0.04%</td>
+<td>0.04%</td>
+<td>0.04%</td>
+<td>0.04%</td>
+<td>0.04%</td>
+<td>0.04%</td>
+
+  </tbody>
+</table>
+<p>
+    <b>注：</b><br>
+1) &nbsp;	Number of input reads：RNA-seq原始数据下机处理后，参考序列比对分析中输入序列数目统计；<br>
+2) &nbsp;	Average input read length：序列平均长度统计；<br>
+3)&nbsp;	Uniquely mapped reads number： 特异性回帖至参考基因组上的序列数目统计，即序列只回帖至参考基因组某一特定位置；<br>
+4)	Uniquely mapped reads %： 特异性回帖至参考基因组上的序列百分比统计；<br>
+5)	&nbsp;Average mapped length： 回帖至参考基因组上的序列平均长度统计；<br>
+6)	&nbsp;Number of splices: Annotated(sjdb)： 已经注释的可变剪接数目统计（即这部分可变剪接出现在参考文档.gtf中）；<br>
+7)&nbsp;	Number of non-canonical splices：未经注释的可变剪接数目统计；<br>
+8)&nbsp;	Mismatch rate per base: 错误匹配百分比统计（一般≤0.8%）；<br>
+9)&nbsp;	Deletion rate per base：缺失百分比统计；<br>
+10)&nbsp;	Deletion average length: 缺失长度平均值统计；<br>
+11)&nbsp;	Insertion rate per base：插入百分比统计;<br>
+12)&nbsp;	Insertion average length: 插入长度平均值统计；<br>
+13)&nbsp;	Number of reads mapped to multiple loci： 回贴至参考基因组多个位点的序列数目统计；
+<br>
+    14)&nbsp;	% of reads mapped to multiple loci： 回帖至参考基因组多个位点的序列百分比统计；<br>Number of reads mapped to too many loci: 如果序列回帖至参考基因组的位置个数大于10，则被认为是改序列为 “too many loci”;<br>
+15)&nbsp;	% of reads mapped to too many loci： “too many loci”百分比统计；<br>
+16)&nbsp;	% of reads unmapped: too many mismatches: 序列中包含太多的错配而造成的回帖失败；默认值为序列长度的30%(0.3*read length)或10个以上错配；<br>
+17)&nbsp;	% of reads unmapped due to too short: 序列太短造成的回帖失败；默认值为2/3序列长度；<br>
+18)&nbsp;	% of reads unmapped due to other reasons: 其他原因造成的回帖失败。
+</p>
+
+<h4><b> 3.2 &nbsp; Reads在参考基因组不同区域的分布情况</b></h4>
+<p>
+&emsp;    将比对到基因组上的reads分布情况进行统计，定位区域分为Exon(外显子)、Intron(内含子)、Intergenic(基因间区)和。在基因组注释较为完全的物种中，比对到Exon（外显子）的reads含量最高，比对到Intron（内含子）区域的reads来源于pre-mRNA的残留及可变剪接过程中发生的内含子滞留事件导致的，而比对到Intergenic（基因间区）的reads是因为基因组注释不完全。</p>
+<img src="../static/pic/images/figure3.3.2.png" height="500" width="500" class="center">
+ <p class="legend"><b>图3.3.2 &nbsp;  Reads在参考基因组不同区域的分布情况</b></p>
+
+<h4><b>3.3 &nbsp; Reads在染色体上的密度分布情况 </b></h4>
+对Total mapped reads比对到基因组上各个染色体（分正负链）的密度进行统计，如下图所示，正常情况下，整个染色体长度越长，该染色体内部定位的reads总数会越多(Marquez et al. 2012)。从定位到染色体上的reads数与染色体长度的关系图中，可以更加直观看出染色体长度和reads总数的关系。（图中最多只展示其中15条染色体）
+<img src="../static/pic/images/figure3.3.3.png" height="400" width="500" class="center">
+ <p class="legend"><b>图3.3.3 &nbsp;  Reads在染色体上的密度分布图</b></p>
+
+
+</div>
+</body>
+</html>
