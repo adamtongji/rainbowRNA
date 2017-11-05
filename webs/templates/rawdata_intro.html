@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link rel="stylesheet" href="../static/css/theme.css">
+        <script src="../static/js/jquery-3.2.1.min.js"></script>
+        <script src="../static/js/bootstrap.min.js"></script>
+
+    <title>转录组结题报告</title>
+<style>
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+p.legend{
+    text-align: center;
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="container-fluid">
+<h2><b>二. &nbsp; 标准分析结果</b></h2>
+    <h3><b>1. &nbsp;测序数据格式</b></h3>
+<p> &emsp; NGS（Next Generation Sequencing，二代高通量测序）技术应用高通量测序仪（如：illumina Hiseq 2000/2500、Miseq）对cDNA进行测序。首先得到的原始图像文件，然后经过碱基识别及误差过滤，最终得到可以用于分析的原始测序片段，我们称之为Reads，结果以fastq格式储存，它包括序列的碱基组成信息以及其对应的序列质量信息，双端测序(pair-end)会分为两个Reads文件：_1,_2两个文件。文件格式如下<b>图3.1</b>:</p>
+    <img src="../static/pic/images/figure3.1.png" height="130" width="600" class="center">
+    <p class="legend"><b>图3.1 &nbsp;  Fastq文件示意图</b></p>
+
+<p>
+第一行：reads名称，通常以@开头，随后为Illumina测序标识别符和描述信息；<br>
+第二行：碱基序列；<br>
+第三行：以+开头，存储与第一行相同的信息或为缺省值；<br>
+第四行：碱基的测序质量值，该行字符为第二行对应碱基的质量值加上33后转换为ASCII码，逆向转化即可直观得到每个碱基的质量信息。
+</p>
+</div>
+
+</body>
+</html>

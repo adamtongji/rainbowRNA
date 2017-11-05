@@ -1345,7 +1345,7 @@ mark,
 }
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #1967be;
+  color: #000000;
 }
 .text-success {
   color: #ffffff;
@@ -3125,12 +3125,12 @@ fieldset[disabled] .btn-default.focus {
 .btn-primary:focus,
 .btn-primary.focus {
   color: #ffffff;
-  background-color: #1967be;
+  background-color: #000000;
   border-color: #10427b;
 }
 .btn-primary:hover {
   color: #ffffff;
-  background-color: #1967be;
+  background-color: #000000;
   border-color: #1862b5;
 }
 .btn-primary:active,
@@ -4594,7 +4594,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 }
 .navbar-inverse {
   background-color: #2780e3;
-  border-color: #1967be;
+  border-color: #000000;
 }
 .navbar-inverse .navbar-brand {
   color: #ffffff;

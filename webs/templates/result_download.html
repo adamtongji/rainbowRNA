@@ -52,7 +52,7 @@
       mRNA-seq标准分析 <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      <li><a href="#dropdown11" data-toggle="tab">原始测序数据</a></li>
+      <li><a href="#dropdown11" data-toggle="tab">测序数据格式</a></li>
       <li><a href="#dropdown12" data-toggle="tab">测序质量评估</a></li>
       <li class="divider"></li>
       <li><a href="#dropdown13" data-toggle="tab">基因表达水平分析</a></li>
@@ -118,16 +118,32 @@
   </div>
 
   <div class="tab-pane fade" id="dropdown11">
-    <p>1</p>
+    <script>
+    $(document).ready(function(){
+    $('#dropdown11').load('rawdata_intro.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="dropdown12">
-    <p>2</p>
+       <script>
+    $(document).ready(function(){
+    $('#dropdown12').load('seq_quality.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="dropdown13">
-    <p>1</p>
+       <script>
+    $(document).ready(function(){
+    $('#dropdown13').load('expression.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="dropdown14">
-    <p>1</p>
+    <script>
+    $(document).ready(function(){
+    $('#dropdown14').load('function.html');
+    })
+    </script>
   </div>
   <div class="tab-pane fade" id="dropdown21">
     <p>1</p>
