@@ -20,6 +20,127 @@ p.legend{
 <body>
 <div class="container-fluid">
 <h3><b>4. &nbsp;基因表达水平分析</b></h3>
+<h3><b>5.1  &nbsp; 基因表达水平分析</b></h3>
+<p>通过回贴定位到基因区域的Reads数目来估计相应基因的表达水平。Reads数目的多少直接反应了基因的表达量，因此直接统计基因上回贴到的Reads数是目前最为常用的评估基因表达水平的方法。</p>
+
+
+<p class="legend"><b>表4 &nbsp; 基因表达水平统计样表</b></p>
+
+<table class="table table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th><b>Gene Symbol</b></th>
+      <th><b>Treat1</b></th>
+      <th><b>Treat2</b></th>
+      <th><b>Treat3</b></th>
+      <th><b>Control1</b></th>
+      <th><b>Control2</b></th>
+      <th><b>Control3</b></th>
+
+    </tr>
+  </thead>
+  <tbody>
+        <tr>
+<td>A1BG</td>
+<td>3</td>
+<td>1</td>
+<td>8</td>
+<td>4</td>
+<td>8</td>
+<td>9</td></tr><tr>
+<td>A1BG-AS1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td></tr><tr>
+<td>A1CF</td>
+<td>589</td>
+<td>538</td>
+<td>460</td>
+<td>625</td>
+<td>474</td>
+<td>509</td></tr><tr>
+<td>A2M</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>6</td></tr><tr>
+<td>A2M-AS1</td>
+<td>5</td>
+<td>4</td>
+<td>7</td>
+<td>2</td>
+<td>6</td>
+<td>2</td></tr><tr>
+<td>A2ML1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td></tr><tr>
+<td>A2MP1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td></tr><tr>
+<td>A3GALT2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td></tr><tr>
+<td>A4GALT</td>
+<td>527</td>
+<td>560</td>
+<td>527</td>
+<td>513</td>
+<td>594</td>
+<td>649</td></tr><tr>
+<td>A4GNT</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>2</td></tr><tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+      </tbody>
+</table>
+<b>注：</b><br>
+1)	每一列为样本，每一行为基因，表格中数字为基因在对应样本中的表达值，即read count; <br>
+2)	完整列表见附件“／结果文件/phase1-AllExpGenes/expression_level_all.xls ”中。<br>
+
+ <h4><b>5.2 &nbsp; 基因表达相关性分析&样本组成分分析 </b></h4>
+生物学重复是任何生物学实验所必须的，高通量测序技术也不例外(Hansen et al.)。生物学重复主要有两个用途：一个是证明所涉及的生物学实验操作是可以重复的且变异不大，另一个是为了确保后续的差异基因分析得到更可靠的结果。样品间基因表达水平相关性是检验实验可靠性和样本选择是否合理的重要指标。根据客户提供的样本我们进行样本基因表达的相关性分析，具体结果如<b>图3.5.4</b>。
+<img src="../static/pic/images/figure3.5.4.png" height="500" width="500" class="center">
+ <p class="legend"><b>图3.5.4 &nbsp;  样本基因相关性分析</b></p>
+<p>当样本数目较多时，根据各样本所有基因的表达水平(read counts)，我们可以对样品进行主成分分析(Principal Component Analysis，PCA)。主成分分析是一种将多个变量通过线性变换以选出较少个数重要变量的多元统计分析方法，它通过降维的手段将大量影响表达模式的基因变换成少数几个主成分，尽可能多地保留原始变量的信息，且彼此间互不相关，将这几个主成分作线性组合，作为新的综合指标来对样品进行聚类分析，具体结果如图3.5.5所示</p>
+
+<img src="../static/pic/images/figure3.5.5.png" height="400" width="400" class="center">
+ <p class="legend"><b>图3.5.5 &nbsp;  样本表达水平的PCA聚类图</b></p>
+ <h4><b>5.3 &nbsp; 差异表达基因筛选 </b></h4>
+<p>
+在得到基因表达值以后，差异基因筛选是整个RNA-seq分析的关键一步。现在科研领域中针对RNA-seq数据差异基因筛选的软件非常多，如edgeR，limma，或者DEseq等等。选择什么样的软件和参数都会对结果产生相当大的影响，因此这一步骤中软件和参数的选择显得至关重要。我们根据客户的数据特点，选择合适软件进行差异基因筛选。	差异表达基因结果展示如<b>表5</b> ：
+    </p>
+
+
+
+
 
 </div>
 </body>
