@@ -131,16 +131,168 @@ p.legend{
  <p class="legend"><b>图3.5.4 &nbsp;  样本基因相关性分析</b></p>
 <p>当样本数目较多时，根据各样本所有基因的表达水平(read counts)，我们可以对样品进行主成分分析(Principal Component Analysis，PCA)。主成分分析是一种将多个变量通过线性变换以选出较少个数重要变量的多元统计分析方法，它通过降维的手段将大量影响表达模式的基因变换成少数几个主成分，尽可能多地保留原始变量的信息，且彼此间互不相关，将这几个主成分作线性组合，作为新的综合指标来对样品进行聚类分析，具体结果如图3.5.5所示</p>
 
-<img src="../static/pic/images/figure3.5.5.png" height="400" width="400" class="center">
+<img src="../static/pic/images/figure3.5.5.png" height="400" width="600" class="center">
  <p class="legend"><b>图3.5.5 &nbsp;  样本表达水平的PCA聚类图</b></p>
  <h4><b>5.3 &nbsp; 差异表达基因筛选 </b></h4>
 <p>
 在得到基因表达值以后，差异基因筛选是整个RNA-seq分析的关键一步。现在科研领域中针对RNA-seq数据差异基因筛选的软件非常多，如edgeR，limma，或者DEseq等等。选择什么样的软件和参数都会对结果产生相当大的影响，因此这一步骤中软件和参数的选择显得至关重要。我们根据客户的数据特点，选择合适软件进行差异基因筛选。	差异表达基因结果展示如<b>表5</b> ：
     </p>
+ <p class="legend"><b>表5 &nbsp;  差异基因结果示意表</b></p>
+<table class="table table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black; ">
+    <tr>
+        <th><b>Gene Symbol</b></th>
+      <th><b>baseMean</b></th>
+      <th><b>log2FC</b></th>
+      <th><b>lfcSE</b></th>
+      <th><b>stat</b></th>
+      <th><b>pval</b></th>
+      <th><b>padj</b></th>
 
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+<td>PER1</td>
+<td>423.3092719</td>
+<td>-0.572766157</td>
+<td>0.168512867</td>
+<td>-3.398946125</td>
+<td>0.00067646</td>
+<td>0.999509376</td></tr><tr>
+<td>UNC5B</td>
+<td>42.94226372</td>
+<td>-1.093134279</td>
+<td>0.34716899</td>
+<td>-3.148709452</td>
+<td>0.001639932</td>
+<td>0.999509376</td></tr><tr>
+<td>CHRNB1</td>
+<td>65.68120407</td>
+<td>0.753102655</td>
+<td>0.254082558</td>
+<td>2.964007692</td>
+<td>0.003036607</td>
+<td>0.999509376</td></tr><tr>
+<td>NCOA5</td>
+<td>346.6340181</td>
+<td>0.497894443</td>
+<td>0.171045329</td>
+<td>2.910891781</td>
+<td>0.003603988</td>
+<td>0.999509376</td></tr><tr>
+<td>CLDN7</td>
+<td>151.9938813</td>
+<td>-0.551411491</td>
+<td>0.192098016</td>
+<td>-2.870469468</td>
+<td>0.004098628</td>
+<td>0.999509376</td></tr><tr>
+<td>MRPL32</td>
+<td>657.9713521</td>
+<td>0.305511511</td>
+<td>0.106912607</td>
+<td>2.857581726</td>
+<td>0.004268827</td>
+<td>0.999509376</td>
+</tr>
 
+  </tbody>
+</table>
 
+<table class="table table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th><b>Gene Symbol</b></th>
+     <th><b>Treat1</b></th>
+      <th><b>Treat2</b></th>
+      <th><b>Treat3</b></th>
+      <th><b>Control1</b></th>
+      <th><b>Control2</b></th>
+      <th><b>Control3</b></th>
 
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>PER1</td>
+<td>392.646376</td>
+<td>293.5164911</td>
+<td>334.9691862</td>
+<td>561.9314193</td>
+<td>544.8259897</td>
+<td>411.966169</td></tr><tr>
+<td>UNC5B</td>
+<td>25.7641979</td>
+<td>21.55191018</td>
+<td>34.98095932</td>
+<td>65.27486183</td>
+<td>65.80491528</td>
+<td>44.27673779</td></tr><tr>
+<td>CHRNB1</td>
+<td>81.41486538</td>
+<td>80.04995211</td>
+<td>85.86235469</td>
+<td>45.40859954</td>
+<td>53.22456383</td>
+<td>48.1268889</td></tr><tr>
+<td>NCOA5</td>
+<td>350.3930915</td>
+<td>449.5112696</td>
+<td>417.6514537</td>
+<td>255.4233724</td>
+<td>259.3487837</td>
+<td>347.4761379</td></tr><tr>
+<td>CLDN7</td>
+<td>127.7904216</td>
+<td>113.9172395</td>
+<td>128.2635175</td>
+<td>210.9607853</td>
+<td>164.5122882</td>
+<td>166.5190356</td></tr><tr>
+<td>MRPL32</td>
+<td>714.1835659</td>
+<td>747.1328864</td>
+<td>720.8197678</td>
+<td>601.6639438</td>
+<td>599.0182729</td>
+<td>565.0096757</td>
+</tr>
+      </tbody>
+</table>
+<p>
+<b>注：</b><br>
+(1)	gene_id: 基因名称，默认格式为gene symbol ID; <br>
+(2)	baseMean: 基因在样本中的平均表达数值统计；<br>
+(3)	log2FC: log2(Fold Change), 实验组与对照组比值取LOG；<br>
+(4)	lfcSE：log2FC的标准方差，用以算p-value值;<br>
+(5)	stat：logFC与lfcSE的比值，原则上服从t分布，用来计算p-value; 该数值如果为正数，代表基因上调；该数值如果为负数，代表基因下调;<br>
+(6)	pval(p-value)：基因差异表达显著性统计参数，数值越小代表显著性越高；一般认为p-value < 0.05 即为显著性具有统计意义;<br>
+(7)	padj(adjusted p-value)：是经过多重假设检验调整过的p-value;<br>
+(8)	本次课题中差异表达基因分析选用软件DESeq2;<br>
+(9)	所有基因表达值完整列表见附件“/结果文件/phase2-DiffExpGenes/ Treat_vs_control_diff.xls”。<br>
+</p>
+<p>差异表达基因结果统计：</p>
+<img src="../static/pic/images/figure3.5.6.png" height="250" width="520" class="center">
+     <p class="legend"><b>图3.5.6 &nbsp;  差异表达基因结果统计饼图</b></p>
+<p> 差异表达基因热图结果展示：
+热图分析可以更直观的看到差异基因在各个处理组中的表达值，并且hierarchical聚类也会使得差异表达基因聚类，便于后续分析。</p>
+    <img src="../static/pic/images/figure3.5.7.png" height="450" width="800" class="center">
+     <p class="legend"><b>图3.5.7 &nbsp;  差异表达基因结果统计热图</b></p>
+    <p><b>注：</b></p>
+<p>
+    (1)	每一行代表一个差异表达基因，红色表示上调，蓝色表示下调；<br>
+(2)	每一列代表一个样本，从左往后分别为3个实验组，3个对照组样本；<br>
+(3)	treat1, treat2, treat3分别对应3个实验组;<br>
+(4)	control1,control2，control3对应3个对照组；<br>
+(5)	根据基因表达量变化将基因分为两类：上调基因、下调基因；<br>
+&emsp; 原始文档见附件“/结果文件/phase2-DiffExpGenes/Treat_vs_control_diff.pdf”。
+    </p>
+
+    <p>差异表达基因火山图展示：</p>
+<p> 火山图可直观显示表达差异显著性基因的整体分布情况，横坐标表示基因在不同样本中的表达倍数变化(log2FoldChange)，纵坐标表示表达差异的显著性水平(-log10padj)。若比较组合无表达差异显著性基因，默认调整筛选表达差异显著性的阈值进行火山图的绘制。上调基因用红色点表示，下调基因用绿色点表示，如图3.5.8所示: </p>
+<img src="../static/pic/images/figure3.5.8.png" height="400" width="400" class="center">
+     <p class="legend"><b>图3.5.8 &nbsp;  差异表达基因火山图</b></p>
+    原始文件见附件“/结果文件/phase2-DiffExpGenes/Treat_vs_control_volcano.pdf”。
 
 </div>
 </body>
