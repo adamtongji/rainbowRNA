@@ -2,9 +2,333 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+        <link rel="stylesheet" href="../static/css/theme.css">
+
+    <title>转录组结题报告</title>
+<style>
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+p.legend{
+    text-align: center;
+    font-size: 14px;
+}
+</style>
 </head>
 <body>
+<div class="container-fluid">
 
+<h3><b>5. &nbsp;差异基因功能及网络分析</b></h3>
+<h4><b>5.1  &nbsp; 差异基因的GO富集分析</b></h4>
+
+    <p>GO（Gene ontology）是国际通用的基因功能分类体系，按照基因的细胞成分（cellular component），分子功能（molecule function）以及生物过程（biological process）分为3类。在我们拿到了差异基因的集合以后，进行GO富集能够看到不同样本在这三大类中的基因分布情况，也可以用于对目标功能的基因的聚集。通过计算数据集的超几何分布，得出基因富集对应GO terms的排序。
+</p>
+    <p>差异表达基因GO富集分析结果展示（上调／下调基因）：</p>
+<p class="legend"><b>表5 &nbsp; 差异基因的GO富集示意图表 </b></p>
+
+<table class="table table-hover table-bordered">
+     <thead style="background-color:#67a9cf; font-color:black;">
+    <tr><th colspan="7" style="text-align:center">Up-regulated Genes Gene Ontology Analysis</th>
+        </tr></thead>
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th><b>GOBPID</b></th>
+      <th><b>Pvalue</b></th>
+      <th><b>OddsRatio</b></th>
+      <th><b>ExpCount</b></th>
+      <th><b>Count</b></th>
+      <th><b>Size</b></th>
+      <th><b>Term</b></th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+<td>GO:0010975</td>
+<td>9.87E-09</td>
+<td>49.56483516</td>
+<td>0.098693503</td>
+<td>4</td>
+<td>62</td>
+<td>regulation of neuron projection development</td></tr>
+<tr><td>GO:0072001</td>
+<td>1.66E-08</td>
+<td>826.7317073</td>
+<td>0.007591808</td>
+<td>2</td>
+<td>48</td>
+<td>renal system development</td></tr><tr>
+<td>GO:0030900</td>
+<td>1.67E-08</td>
+<td>5.693782383</td>
+<td>2.469868173</td>
+<td>11</td>
+<td>57</td>
+<td>forebrain development</td></tr><tr>
+<td>GO:0001822</td>
+<td>2.22E-08</td>
+<td>16.63632766</td>
+<td>0.349223164</td>
+<td>5</td>
+<td>46</td>
+<td>kidney development</td></tr><tr>
+<td>GO:0001655</td>
+<td>4.15E-08</td>
+<td>9.481650071</td>
+<td>0.736405367</td>
+<td>6</td>
+<td>51</td>
+<td>urogenital system development</td></tr>
+</tbody>
+</table>
+
+<table class="table table-hover table-bordered">
+     <thead style="background-color:#67a9cf; font-color:black;">
+    <tr><th colspan="7" style="text-align:center">Down-regulated Genes Gene Ontology Analysis</th>
+        </tr></thead>
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th><b>GOBPID</b></th>
+      <th><b>Pvalue</b></th>
+      <th><b>OddsRatio</b></th>
+      <th><b>ExpCount</b></th>
+      <th><b>Count</b></th>
+      <th><b>Size</b></th>
+      <th><b>Term</b></th>
+
+    </tr>
+  </thead>
+    <tbody>
+<tr>
+<td>GO:0008544</td>
+<td>1.36E-13</td>
+<td>6.491166078</td>
+<td>2.037429379</td>
+<td>11</td>
+<td>85</td>
+<td>epidermis development</td></tr><tr>
+<td>GO:0043588</td>
+<td>3.39E-11</td>
+<td>6.228924847</td>
+<td>2.118644068</td>
+<td>11</td>
+<td>74</td>
+<td>skin development</td></tr><tr>
+<td>GO:0060337</td>
+<td>6.89E-10</td>
+<td>6.131799877</td>
+<td>2.150423729</td>
+<td>11</td>
+<td>26</td>
+<td>type I interferon signaling pathway</td></tr><tr>
+<td>GO:0071357</td>
+<td>6.89E-10</td>
+<td>4.864259523</td>
+<td>3.262711864</td>
+<td>13</td>
+<td>26</td>
+<td>cellular response to type I interferon</td></tr><tr>
+<td>GO:0034340</td>
+<td>2.22E-09</td>
+<td>3.783207038</td>
+<td>5.71680791</td>
+<td>17</td>
+<td>26</td>
+<td>response to type I interferon</td></tr>
+    </tbody></table>
+<p>
+    注：<br>
+1)	GOBPID: gene ontology biological process ID；GO数据库中生物学过程分类编号信息；<br>
+2)	Pvalue: 富集分析显著性统计参数；<br>
+3)	Count: 差异表达基因中隶属于该生物学过程的基因个数统计；<br>
+4)	Size：该生物学过程所包含的所有基因个数统计；<br>
+5)	Term：生物学过程名称；<br>
+6)	Gene Ontology分析选用数据库GO生物过程（biological process）；<br>
+7)	GO富集分析按照显著性统计参数pvalue排序；<br>
+8)	GO富集分析显著性筛选阀值：cutoff: pvalue < 0.05；<br>
+9)	上、下调差异基因GO富集分析分别选择top20 biological process做结果展示，完整列表见附件“/结果文件/phase3-GO_KEGG/up/genes_up_go.xls; /结果文件/ phase3-GO_KEGG/down/ genes_down_go.xls ”。<br>
+</p>
+
+<div class="row">
+  <div class="col-sm-6"><img src="../static/pic/images/figure4.1.1.png" height="300" width="360" class="center"></div>
+  <div class="col-sm-6"><img src="../static/pic/images/figure4.1.2.png" height="300" width="360" class="center"></div>
+</div>
+     <p class="legend"><b>图4.1 &nbsp; 差异基因的GO富集示意图</b></p>
+   <p> 注：&nbsp; 选取结果中top10富集进行绘图展示。</p>
+   <h4><b>5.2 &nbsp; 差异基因的KEGG富集分析 </b></h4>
+    <p>
+随着科学研究的发展，科学家们发现不同的基因间存在着相互作用关系。这些基因相互协调，发挥其生物学功能，展现出生物学现象。针对这一现象，科学家们分门别类的制定出各种pathway。较为著名的有KEGG（Kyoto Encyclopedia of Genes and Genomes）数据库。利用pathway显著性富集，确定差异基因所属的pathway，进而找出可能相互作用的基因，挖掘现象背后的机制。<br>
+	差异表达基因KEGG pathway富集分析结果展示（上调／下调基因）：
+</p>
+    <p><b>表6 &nbsp; 差异基因的KEGG富集示意图表</b></p>
+    <table class="table table-hover table-bordered">
+     <thead style="background-color:#67a9cf; font-color:black;">
+    <tr><th colspan="7" style="text-align:center">Up-regulated Genes KEGG Pathway Analysis</th>
+        </tr></thead>
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th><b>GOBPID</b></th>
+      <th><b>Pvalue</b></th>
+      <th><b>OddsRatio</b></th>
+      <th><b>ExpCount</b></th>
+      <th><b>Count</b></th>
+      <th><b>Size</b></th>
+      <th><b>Term</b></th>
+
+    </tr>
+  </thead>
+  <tbody>
+  <tr><td>hsa04540</td>
+<td>1.1E-05</td>
+<td>10.5046208</td>
+<td>5.659773585</td>
+<td>35</td>
+<td>20</td>
+<td>Gap junction</td></tr><tr>
+<td>hsa05200</td>
+<td>7.26E-05</td>
+<td>5.369824806</td>
+<td>13.16226415</td>
+<td>51</td>
+<td>53</td>
+<td>Pathways in cancer</td></tr><tr>
+<td>hsa00982</td>
+<td>0.00029073</td>
+<td>3.021918626</td>
+<td>21.32286792</td>
+<td>53</td>
+<td>15</td>
+<td>Drug metabolism - cytochrome P450</td></tr><tr>
+<td>hsa04510</td>
+<td>0.000398643</td>
+<td>6.210961919</td>
+<td>5.133283019</td>
+<td>23</td>
+<td>30</td>
+<td>Focal adhesion</td></tr><tr>
+<td>hsa04974</td>
+<td>0.000569771</td>
+<td>4.453982344</td>
+<td>8.621283019</td>
+<td>30</td>
+<td>17</td>
+<td>Protein digestion and absorption</td></tr>
+  </tbody></table>
+
+<table class="table table-hover table-bordered">
+     <thead style="background-color:#67a9cf; font-color:black;">
+    <tr><th colspan="7" style="text-align:center">Down-regulated Genes KEGG Pathway Analysis</th>
+        </tr></thead>
+  <thead style="background-color:#67a9cf; font-color:black;">
+    <tr>
+        <th><b>GOBPID</b></th>
+      <th><b>Pvalue</b></th>
+      <th><b>OddsRatio</b></th>
+      <th><b>ExpCount</b></th>
+      <th><b>Count</b></th>
+      <th><b>Size</b></th>
+      <th><b>Term</b></th>
+
+    </tr>
+  </thead>
+  <tbody>
+<tr><td>hsa04514</td>
+<td>1.56E-06</td>
+<td>4.88481203</td>
+<td>12.60316981</td>
+<td>36</td>
+<td>31</td>
+<td>Cell adhesion molecules (CAMs)</td></tr><tr>
+<td>hsa04360</td>
+<td>4.82E-06</td>
+<td>21.76313148</td>
+<td>0.632301887</td>
+<td>10</td>
+<td>34</td>
+<td>Axon guidance</td></tr><tr>
+<td>hsa05165</td>
+<td>8.67E-05</td>
+<td>50.32307692</td>
+<td>0.19290566</td>
+<td>6</td>
+<td>48</td>
+<td>Human papillomavirus infection</td></tr><tr>
+<td>hsa04940</td>
+<td>0.000196515</td>
+<td>13.78965297</td>
+<td>0.932377358</td>
+<td>10</td>
+<td>12</td>
+<td>Type I diabetes mellitus</td></tr><tr>
+<td>hsa05332</td>
+<td>0.000524794</td>
+<td>13.84582543</td>
+<td>0.825207547</td>
+<td>9</td>
+<td>11</td>
+<td>Graft-versus-host disease</td></tr>
+</tbody></table>
+
+<p>
+    注：<br>
+(1)	KEGGID: KEGG pathway ID；KEGG数据库中生物学通路编号信息；<br>
+(2)	Pvalue: 富集分析显著性统计参数；<br>
+(3)	Count: 差异表达基因中隶属于该生物学通路的基因个数统计；<br>
+(4)	Size：该生物学通路所包含的所有基因个数统计；<br>
+(5)	Term：生物学通路名称；<br>
+(6)	KEGG pathway富集分析按照显著性统计参数pvalue排序；<br>
+(7)	KEGG pathway富集分析显著性筛选阀值：cutoff: pvalue < 0.05；<br>
+(8)	上、下调差异基因KEGG pathway富集分析分别选择top20 biological process做结果展示，完整列表见附件“/结果文件/phase3-GO_KEGG/up/genes_up_kegg.xls; /结果文件/phase3-GO_KEGG/down/genes_down_kegg.xls”。<br>
+
+</p>
+
+<div class="row">
+  <div class="col-sm-6"><img src="../static/pic/images/figure4.2.1.png" height="300" width="360" class="center"></div>
+  <div class="col-sm-6"><img src="../static/pic/images/figure4.2.2.png" height="300" width="360" class="center"></div>
+</div>
+     <p class="legend"><b>图4.2 &nbsp; 差异基因的KEGG富集示意图</b></p>
+<p>注：&nbsp; 选取结果中top10富集进行绘图展示。</p>
+
+<p>差异表达基因在KEGG pathway中具体通路信息展示：<br>
+以表达上调基因KEGG pathway富集分析结果为例，其中表达下调基因AMPK,ACC,GK,G6PC,PP1等蛋白因子显著富集在生物学通路“INSULIN SIGNALING PATHWAY”中，并以绿色字体标出。所有显著富集的通路信息见附件“／结果文件／phase3-GO_KEGG”。
+    </p>
+
+ <img src="../static/pic/images/figure4.3.png" height="400" width="400" class="center">
+    <p class="legend"><b>图4.3 &nbsp;  KEGG pathway 富集分析结果展示示意图
+</b></p>
+ <h4><b>5.3 &nbsp; 差异基因的GSEA富集分析 </b></h4>
+   <p>
+GSEA软件是由broad institute开发的用于分析差异表达基因所富集的通路和GO term的软件。用该软件分析差异表达基因的特征被 国际上许多顶尖实验室所采用。GSEA软件的分析是基于广泛的数据库的，其中较为著名的有Gene Ontology 数据库和KEGG数据库。<br>
+该分析的好处是，可以一次性的扫描所有GO term以及pathway，并直观的了解每一个pathway或者GO term中所有基因的差异表达情况，且该方法不依赖于差异表达的p-value cutoff。如上三点好处，让GSEA 备受推崇。
+</p>
+
+ <img src="../static/pic/images/figure4.4.png" height="400" width="400" class="center">
+    <p class="legend"><b>图4.4 &nbsp;  GSEA分析核心图(举例)</b></p>
+    <p>
+注：<br>
+(1)	文件在数据汇总的GESA文件夹中index.html文件，以上图为例，说明GSEA的核心分析图；<br>
+(2)	我们根据基因的差异表达情况，对基因组中的所有基因进行排序，其中上调的基因依次排在最前面（显示为图中中间颜色符红色的部分），下调的基因依次排在最后面（显示为图中中间颜色符蓝色的部分），差异表达不明显的基因排在中间（显示为图中中间颜色符红蓝交界的部分）；<br>
+(3)	颜色符上面的黑色竖线（bar）代表此图中的基因在排序队列中的位置。若图中大部分黑色竖线对应（hit）于红色的颜色符区域，表明在此图示状态下的大部分基因是上调的。若图中大部分黑色竖线对应（hit）于蓝色的颜色符区域，表明在此图示状态下的大部分基因是下调的；<br>
+(4)	图中最上面的绿色曲线，与黑色竖线的富集区域相对应。其峰值出现的区域 即为黑色竖线（bar）集中出现的区域；<br>
+完整信息见附件“/结果文件/phase4-GSEA/” <br>
+    </p>
+
+<h4><b>5.3 &nbsp; 差异基因中核心基因Signal-Net分析</b></h4>
+<p> &emsp; Signal-Net整合所有KEGG通路中基因和基因之间的调控关系，构建基因与基因间的调控网络图。通过Singal-Net，可以获得网络中具有核心调控地位的基因，重要的桥梁基因（eg.连接主网络图的基因）以及核心基因的上下游基因和它们之间的相互关系。</p>
+ <img src="../static/pic/images/figure4.5.png" height="400" width="400" class="center">
+    <p class="legend"><b>图4.5 &nbsp;  Signal-Net分析核心基因图(部分截图)</b></p>
+<p>
+    注：<br>
+(1)	文件在数据汇总的Signal-Net文件夹中,以上图为例，图中的节点为基因，红色代表上调，蓝色代表下调。红色越深，代表上调程度越高；蓝色越深，代表下调程度越高；<br>
+(2)	各个基因间的连线代表实验验证的来自KEGG数据库的调控关系，可以将图放大后即可清楚看到；<br>
+(3)	差异表达显著且连接的边众多的节点即为核心基因；核心基因互相连接的即为重要的桥梁基因；
+原始文档见附件“/结果文件／phase5-SignalNet/”。<br>
+</p>
+
+
+</div>
 </body>
 </html>

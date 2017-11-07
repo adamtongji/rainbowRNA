@@ -20,11 +20,11 @@ p.legend{
 <body>
 <div class="container-fluid">
 <h3><b>4. &nbsp;基因表达水平分析</b></h3>
-<h3><b>5.1  &nbsp; 基因表达水平分析</b></h3>
+<h4><b>4.1  &nbsp; 基因表达水平分析</b></h4>
 <p>通过回贴定位到基因区域的Reads数目来估计相应基因的表达水平。Reads数目的多少直接反应了基因的表达量，因此直接统计基因上回贴到的Reads数是目前最为常用的评估基因表达水平的方法。</p>
 
 
-<p class="legend"><b>表4 &nbsp; 基因表达水平统计样表</b></p>
+<p class="legend"><b>表3 &nbsp; 基因表达水平统计样表</b></p>
 
 <table class="table table-hover table-bordered">
   <thead style="background-color:#67a9cf; font-color:black;">
@@ -125,7 +125,7 @@ p.legend{
 1)	每一列为样本，每一行为基因，表格中数字为基因在对应样本中的表达值，即read count; <br>
 2)	完整列表见附件“／结果文件/phase1-AllExpGenes/expression_level_all.xls ”中。<br>
 
- <h4><b>5.2 &nbsp; 基因表达相关性分析&样本组成分分析 </b></h4>
+ <h4><b>4.2 &nbsp; 基因表达相关性分析&样本组成分分析 </b></h4>
 生物学重复是任何生物学实验所必须的，高通量测序技术也不例外(Hansen et al.)。生物学重复主要有两个用途：一个是证明所涉及的生物学实验操作是可以重复的且变异不大，另一个是为了确保后续的差异基因分析得到更可靠的结果。样品间基因表达水平相关性是检验实验可靠性和样本选择是否合理的重要指标。根据客户提供的样本我们进行样本基因表达的相关性分析，具体结果如<b>图3.5.4</b>。
 <img src="../static/pic/images/figure3.5.4.png" height="500" width="500" class="center">
  <p class="legend"><b>图3.5.4 &nbsp;  样本基因相关性分析</b></p>
@@ -133,11 +133,11 @@ p.legend{
 
 <img src="../static/pic/images/figure3.5.5.png" height="400" width="600" class="center">
  <p class="legend"><b>图3.5.5 &nbsp;  样本表达水平的PCA聚类图</b></p>
- <h4><b>5.3 &nbsp; 差异表达基因筛选 </b></h4>
+ <h4><b>4.3 &nbsp; 差异表达基因筛选 </b></h4>
 <p>
 在得到基因表达值以后，差异基因筛选是整个RNA-seq分析的关键一步。现在科研领域中针对RNA-seq数据差异基因筛选的软件非常多，如edgeR，limma，或者DEseq等等。选择什么样的软件和参数都会对结果产生相当大的影响，因此这一步骤中软件和参数的选择显得至关重要。我们根据客户的数据特点，选择合适软件进行差异基因筛选。	差异表达基因结果展示如<b>表5</b> ：
     </p>
- <p class="legend"><b>表5 &nbsp;  差异基因结果示意表</b></p>
+ <p class="legend"><b>表4 &nbsp;  差异基因结果示意表</b></p>
 <table class="table table-hover table-bordered">
   <thead style="background-color:#67a9cf; font-color:black; ">
     <tr>

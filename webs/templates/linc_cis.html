@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link rel="stylesheet" href="../static/css/theme.css">
+
+    <title>转录组结题报告</title>
+<style>
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+p.legend{
+    text-align: center;
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+<h2><b>三、lncRNA分析</b></h2>
+<h3><b>1. lncRNA cis-regulation预测</b></h3>
+<p>&emsp;这里，我们基于cis_regulation 的原理，定位关键基因。我们首先对每一个lncRNA 搜索距离其100kb以内的mRNA，组成”lncRNA－mRNA 匹配对”。对这些匹配对，再利用mRNA和lncRNA的基因表达量进行关联分析，从而定位表达协同的“lncRNA－mRNA匹配对”。在得到匹配对以后，我们可以通过mRNA的功能推测与其匹配的lncRNA功能。
+ </p>
+<img src="../static/pic/images/figure6.1.png" height="400" width="400" class="center">
+    <p class="legend"><b>图6.1 &nbsp;  lncRNA顺式调控示意图</b></p>
+<p>
+    老师可以通过自己倾向的几个原则之一，利用excel对我们的输出结果自行进行简单操作，从而定位关键基因：<br>
+(1）老师可以通过mRNA 或者lncRNA 的差异表达程度，进一步过滤筛选更为严格的“lncRNA-mRNA匹配对”。（我们的输出文件会有每一个lncRNA以及mRNA的差异表达程度）；<br>
+(2）与老师感兴趣的mRNA有关联的lncRNA是关键lncRNA。如果老师有感兴趣的mRNA的话，通过excel 搜索命令，就可以找到与之关联的关键lncRNA。<br>
+(3）案例：Genome-wide Mapping and Characterization of Notch-Regulated Long Noncoding RNAs in Acute Leukemia的作者就是通过该方法成为寻找到关键lncRNA。<br>
+
+</p>
+    <p class="legend"><b>表7 &nbsp;  lncRNA顺式调控示意图</b></p>
+
+<table class="table table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black; ">
+    <tr>
+        <th><b>lncRNA_name</b></th>
+      <th><b>lncRNA_logFC</b></th>
+      <th><b>ncRNA_p_value</b></th>
+      <th><b>mRNA_name</b></th>
+      <th><b>mRNA_logFC</b></th>
+      <th><b>mRNA_p_value</b></th>
+      <th><b>distance</b></th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+	<td>RP11-862L9.3</td>
+	<td>-1.337504919</td>
+<td>0.018773892</td>
+<td>ZNF236</td>
+<td>-0.126316469</td>
+<td>0.596851459</td>
+<td>78023</td></tr><tr>
+RP11-862L9.3</td>
+<td>-1.337504919</td>
+<td>0.018773892</td>
+<td>MBP</td>
+<td>-0.026029997</td>
+<td>0.960765809</td>
+<td>81565</td></tr><tr>
+<td>RP11-527H14.2</td>
+<td>-1.519015199</td>
+<td>0.023924117</td>
+<td>ANKRD30B</td>
+<td>-0.301324528</td>
+<td>0.603648636</td>
+<td>155762</td></tr><tr>
+<td>RP1-290I10.7</td>
+<td>1.135807811</td>
+<td>0.04445406</td>
+<td>TFAP2A</td>
+<td>-0.048655661</td>
+<td>0.930942806</td>
+<td>27894</td></tr><tr>
+<td>RP1-290I10.7</td>
+<td>1.135807811</td>
+<td>0.04445406</td>
+<td>GCNT2</td>
+<td>0.087585436</td>
+<td>0.855855377</td>
+<td>
+126479</td> </tr>
+    </tbody></table>
+
+    <p>注：<br>
+1）第一列为lncRNA，第二列和第三列是这个lncRNA的差异表达log（fold-change）和显著性p_value；第四列为mRNA，第五列和第六列是这个mRNA 的差异表达log（fold-change）和显著性p－value。每一行是距离在100kb以内的一对lncRNA和mRNA，其中距离是在最后一列；<br>
+2）文件结果汇总在lncRNA/cis-regulation 中；<br>
+3）如果是windows系统，请用excel文件打开所有的文件。<br>
+</p>
+    </div>
+</body>
+</html>
