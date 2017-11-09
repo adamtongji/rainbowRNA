@@ -19,12 +19,13 @@ p.legend{
 </head>
 <body>
 <div class="container-fluid">
-<h2><b>三、lncRNA分析</b></h2>
+
+
 <h3><b>1. lncRNA cis-regulation预测</b></h3>
 <p>&emsp;这里，我们基于cis_regulation 的原理，定位关键基因。我们首先对每一个lncRNA 搜索距离其100kb以内的mRNA，组成”lncRNA－mRNA 匹配对”。对这些匹配对，再利用mRNA和lncRNA的基因表达量进行关联分析，从而定位表达协同的“lncRNA－mRNA匹配对”。在得到匹配对以后，我们可以通过mRNA的功能推测与其匹配的lncRNA功能。
  </p>
-<img src="../static/pic/images/figure6.1.png" height="400" width="400" class="center">
-    <p class="legend"><b>图6.1 &nbsp;  lncRNA顺式调控示意图</b></p>
+<img src="../static/pic/images/figure5.1.png" height="200" width="400" class="center">
+    <p class="legend"><b>图5.1 &nbsp;  lncRNA顺式调控示意图</b></p>
 <p>
     老师可以通过自己倾向的几个原则之一，利用excel对我们的输出结果自行进行简单操作，从而定位关键基因：<br>
 (1）老师可以通过mRNA 或者lncRNA 的差异表达程度，进一步过滤筛选更为严格的“lncRNA-mRNA匹配对”。（我们的输出文件会有每一个lncRNA以及mRNA的差异表达程度）；<br>
@@ -55,7 +56,7 @@ p.legend{
 <td>-0.126316469</td>
 <td>0.596851459</td>
 <td>78023</td></tr><tr>
-RP11-862L9.3</td>
+<td>RP11-862L9.3</td>
 <td>-1.337504919</td>
 <td>0.018773892</td>
 <td>MBP</td>

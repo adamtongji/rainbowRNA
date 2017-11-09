@@ -2,9 +2,173 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+        <link rel="stylesheet" href="../static/css/theme.css">
+
+    <title>转录组结题报告</title>
+<style>
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+p.legend{
+    text-align: center;
+    font-size: 14px;
+}
+</style>
 </head>
 <body>
+<div class="container-fluid">
+<h2><b>三、&nbsp;可变剪接分析</b></h2>
+<p>
+    &emsp; 针对可变剪接分析(Alternative splicing, AS)，我们采用 rMATS 软件作分析，它是一种从重复的 RNA-seq数据中检测不同AS的强大而灵活的统计分析方法，它不仅可以对可变剪接事件进行分类，还可以进行不同样本间可变剪接事件的差异分析。除了进行非配对重复样品的分析，我们的方法还包括了专为配对重复样品分析的模式，比如针对对照模式匹配的临床 RNA-seq 数据集的案例。
+</p>
+<img src="../static/pic/images/figure6.1.png" height="240" width="400" class="center">
+    <p class="legend"><b>图6.1 &nbsp;  可变剪接形成示意图</b></p>
+   <p>&emsp; rMATS软件对可变剪接事件分类如下图所示：</p>
+<img src="../static/pic/images/figure6.2.png" height="400" width="400" class="center">
+    <p class="legend"><b>图6.2 &nbsp;  可变剪接分类示意图</b></p>
+
+    <h3><b>1.可变剪接注释及差异分析统计</b></h3>
+<p>可变剪接差异分析包括可变剪接事件定量及表达差异显著性分析。每个可变剪接事件对应两个Isoform，分别为Exon Inclusion Isoform和Exon Skipping Isoform，如下图所示。分别对两个Isoform进行表达量统计，并除以其有效长度，得到校正后表达量，然后计算Exon Inclusion Isoform在两个Isoform总表达量的比值，最后进行差异显著性分析，结果如下表所示:
+</p>
+<p class="legend"><b>表9 &nbsp;  可变剪接差异分析结果</b></p>
+
+<table class="table table-hover table-bordered">
+  <thead style="background-color:#67a9cf; font-color:black; ">
+    <tr>
+        <th><b>ID</b></th>
+      <th><b>GeneID</b></th>
+      <th><b>geneSymbol</b></th>
+      <th><b>strand</b></th>
+      <th><b>exonStart</b></th>
+      <th><b>exonEnd</b></th>
+      <th><b>upstreamES</b></th>
+        <th><b>upstreamEE</b></th>
+        <th><b>downstreamES</b></th>
+        <th><b>downstreamEE</b></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+<td>18017</td>
+<td>ENSG00000140416</td>
+<td>TPM1</td>
+<td>chr15</td>
+<td>+</td>
+<td>63353911</td>
+<td>63353987</td>
+<td>63353396</td>
+<td>63353472</td>
+<td>63354413</td></tr><tr>
+<td>18035</td>
+<td>ENSG00000140416</td>
+<td>TPM1</td>
+<td>chr15</td>
+<td>+</td>
+<td>63353396</td>
+<td>63353472</td>
+<td>63353067</td>
+<td>63353138</td>
+<td>63353911</td></tr><tr>
+<td>18038</td>
+<td>ENSG00000140416</td>
+<td>TPM1</td>
+<td>chr15</td>
+<td>+</td>
+<td>63340746</td>
+<td>63340906</td>
+<td>63336255</td>
+<td>63336351</td>
+<td>63349183</td></tr><tr>
+<td>19449</td>
+<td>ENSG00000039560</td>
+<td>RAI14</td>
+<td>chr5</td>
+<td>+</td>
+<td>34813678</td>
+<td>34813765</td>
+<td>34812284</td>
+<td>34812313</td>
+<td>34814687</td></tr><tr>
+<td>21227</td>
+<td>ENSG00000104852</td>
+<td>SNRNP70</td>
+<td>chr19</td>
+<td>+</td>
+<td>49605370</td>
+<td>49606844</td>
+<td>49604646</td>
+<td>49604728</td>
+<td>49607890</td></tr><tr>
+<td>31373</td>
+<td>ENSG00000112081</td>
+<td>SRSF3</td>
+<td>chr6</td>
+<td>+</td>
+<td>36567597</td>
+<td>36568053</td>
+<td>36566625</td>
+<td>36566760</td>
+<td>36568928</td></tr><tr>
+<td>33032</td>
+<td>ENSG00000138326</td>
+<td>RPS24</td>
+<td>chr10</td>
+<td>+</td>
+<td>79799961</td>
+<td>79799983</td>
+<td>79796951</td>
+<td>79797062</td>
+<td>79800372</td></tr><tr>
+<td>33035</td>
+<td>ENSG00000138326</td>
+<td>RPS24</td>
+<td>chr10</td>
+<td>+</td>
+<td>79799958</td>
+<td>79799983</td>
+<td>79796951</td>
+<td>79797062</td>
+<td>79800372</td></tr><tr>
+<td>34795</td>
+<td>ENSG00000198467</td>
+<td>TPM2</td>
+<td>chr9</td>
+<td>-</td>
+<td>35684728</td>
+<td>35684743</td>
+<td>35684484</td>
+<td>35684547</td>
+<td>35685060</td></tr><tr>
+<td>35439</td>
+<td>ENSG00000163359</td>
+<td>COL6A3</td>
+<td>chr2</td>
+<td>-</td>
+<td>238303229</td>
+<td>238303268</td>
+<td>238296224</td>
+<td>238296827</td>
+<td>2.38E+08</td></tr>
+    </tbody></table>
+<p>
+    注：<br>
+(1)ID：可变剪接事件编号 <br>
+(2)GeneID：可变剪接事件所在基因编号<br>
+(3)geneSymbol：可变剪接事件所在基因名称<br>
+(4)chr：可变剪接事件所在染色体<br>
+(5)strand： 可变剪接事件所在链的方向<br>
+(6)exonStart_0base：发生该可变剪切事件的外显子起始位置<br>
+(7)exonEnd：发生该可变剪切事件的外显子终止位置<br>
+(8)upstreamES：发生该可变剪切事件上游exon起始位置<br>
+(9)upstreamEE：发生该可变剪切事件上游exon终止位置<br>
+(10)downstreamES：发生该可变剪切事件下游exon起始位置<br>
+(11)downstreamEE：发生该可变剪切事件下游exon终止位置<br>
+<br>
+</p>
+
+</div>
 
 </body>
 </html>
