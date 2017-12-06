@@ -66,7 +66,9 @@ se <- SummarizedExperiment(log2(counts(pca_dds, normalized=TRUE)),colData=colDat
 pdf('../results/pca.pdf')
 plotPCA( DESeqTransform(se))
 dev.off()
-
+png('../results/pca.png')
+plotPCA( DESeqTransform(se))
+dev.off()
 res <- results(dds,contrast = c("condition","treat", "control"))
 res <- res[order(res$pvalue),]
 head(res)
@@ -100,7 +102,9 @@ pdata<-t(scale(t(pdata[,8:(7+length(file_name))])))
 pdf('../results/Treat_vs_control_diff.pdf')
 pheatmap(pdata[,1:length(file_name)],col=colorRampPalette(c('blue','white','red'))(50),scale='none',cluster_rows=F,cluster_cols=F,show_rownames=F,cellwidth=30,annotation_row=ann,annotation_col=ann_col)
 dev.off()
-
+png('../results/Treat_vs_control_diff.png')
+pheatmap(pdata[,1:length(file_name)],col=colorRampPalette(c('blue','white','red'))(50),scale='none',cluster_rows=F,cluster_cols=F,show_rownames=F,cellwidth=30,annotation_row=ann,annotation_col=ann_col)
+dev.off()
 
 
 ####################

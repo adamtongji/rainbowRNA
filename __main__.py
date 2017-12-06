@@ -29,6 +29,7 @@ from lib.hisat2 import hisat2_single_run, hisat2_pair_run
 from lib.star import star_pair_run, star_single_run, starindex
 from lib.ciri import ciri_run, ciri_process
 from multiprocessing import Pool
+from lib.generate_web import update_html
 import subprocess
 
 
@@ -201,6 +202,10 @@ def downstream_main(Outputdir, Genome):
          {1}/lib/db/mouse_merged_KEGG.txt -i {0}/results/Treat_vs_control_diff.txt -d \
            {0}/results/cytoscape'.format(Outputdir,SOFT_PATH))
     get_report(Outputdir)
+    # sh("mkdir -p {}/html".format(Outputdir))
+    sh("cp -r {0}/html_template {1}/html; mv {1}/html/index.html {1}/html/Web_Report.html"\
+       .format(SOFT_PATH, Outputdir))
+    update_html()
 
 
 @time_func
@@ -260,7 +265,7 @@ def main():
             print "Please give config files"
             sys.exit(1)
         command, paramter = myParser.load_configs()
-    command_functions = {"mapping":mapping_main,
+    command_functions = {"mapping":mapping_main_star,
                          "deseq":deseq_main,
                          "downstream":downstream_main,
                          "circ_mapping":circ_mapping_main,

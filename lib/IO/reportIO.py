@@ -71,6 +71,7 @@ def get_report(Outputdir):
     sh('cp {0}/results/cytoscape/* {0}/final/phase5-SignalNet/'.format(Outputdir))
 
 
+
 def get_ciri_report(Outputdir):
     if not os.path.exists('{0}/final/'.format(Outputdir)):
         sh('mkdir {0}/final/'.format(Outputdir))
@@ -88,7 +89,7 @@ def get_ciri_report(Outputdir):
        .format(Outputdir))
     sh('cp {0}/results/Treat_vs_control_diff.txt {0}/final/phase2-DiffExpGenes/Treat_vs_control_diff.xls' \
        .format(Outputdir))
-    sh('cp {0}/results/Treat_vs_control_diff.pdf {0}/final/phase2-DiffExpGenes/Treat_vs_control_diff.pdf' \
+    sh('cp {0}/results/Treat_vs_control_diff* {0}/final/phase2-DiffExpGenes/' \
        .format(Outputdir))
     sh('cp -r {0}/results/down/ {0}/final/phase3-GO_KEGG/down/'.format(Outputdir) \
        .format(Outputdir))
