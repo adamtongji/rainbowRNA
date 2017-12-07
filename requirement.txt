@@ -1,10 +1,8 @@
 # Environ
-# Flask
-# Virtualenv
+# conda
 
 # python2.7.5 or higher
 # pip
-# flask
 # numpy
 
 # R(3.2 or higher)
@@ -12,10 +10,6 @@
 # pheatmap
 # org.Mm.eg.db
 # org.Hs.eg.db
-# GOstats
-# Category
-# KEGG.db
-# GO.db
 # pathview
 # ggplot2
 # reshape2
@@ -23,6 +17,7 @@
 
 
 ## software
+# STAR
 # hisat2
 # feature-count
 # CIRI2

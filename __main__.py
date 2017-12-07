@@ -183,14 +183,14 @@ def downstream_main(Outputdir, Genome):
             print >> f, line
 
     sh("sort -k 2gr {0}/results/gsea_input.txt >{0}/results/gsea/gsea_input.rnk".format(Outputdir))
-    sh("export LANG=en_US.UTF-8;java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
+    sh("export LANG=en_US.UTF-8;java -cp {1}/bin/gsea2-2.2.4.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
          -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
           -rpt_label bp -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-           -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>gsea.log".format(Outputdir))
-    sh("export LANG=en_US.UTF-8; java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
+           -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>gsea.log".format(Outputdir,SOFT_PATH))
+    sh("export LANG=en_US.UTF-8; java -cp {1}/bin/gsea2-2.2.4.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
          -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
           -rpt_label kegg -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-         -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>>gsea.log".format(Outputdir))
+         -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>>gsea.log".format(Outputdir,SOFT_PATH))
     if not os.path.exists('{0}/results/cytoscape/'.format(Outputdir)):
         sh('mkdir {0}/results/cytoscape'.format(Outputdir))
     if Genome.lower() == 'hg19' or Genome.lower() == 'hg38':
