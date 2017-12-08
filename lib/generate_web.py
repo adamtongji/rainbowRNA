@@ -16,6 +16,9 @@ def load_fig():
     sh("cp {}/results/down/sample.png {}/static/pic/images/figure4.3.png".format(resultdir, webdir))
     sh("a=`ls {0}/final/phase4-GSEA/BP/enplot_*.png`;for i in $a; cp $i \
     {1}/static/pic/images/figure4.4.png;break;done ".format(resultdir, webdir))
+    sh("cp {}/results/corrplot.png {}/static/pic/images/figure3.5.4.png".format(resultdir, webdir))
+    sh("cp {}/results/volcano.png {}/static/pic/images/figure3.5.8.png".format(resultdir, webdir))
+
 
 
 def load_table():

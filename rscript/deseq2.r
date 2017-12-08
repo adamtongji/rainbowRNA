@@ -2,6 +2,13 @@ rm(list=ls())
 library(DESeq2)
 library(reshape2)
 library(pheatmap)
+library(corrplot)
+library(ggplot2)
+
+mytemp<-theme(panel.background=element_rect(fill="white",colour=NA), panel.grid.major =element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black",size=0.5),axis.text.x = element_text(face = "bold"),axis.text.y =element_text(face = "bold"),
+              axis.title.y=element_text(face="bold"),axis.title.x=element_text(face="bold"),legend.text=element_text(face="bold"),legend.title=element_text(face="bold"))
+
+
 
 args<-commandArgs(T)
 outexprdir = args[1]
@@ -64,14 +71,22 @@ dds <- DESeq(dds)
 pca_dds <- estimateSizeFactors(dds)
 se <- SummarizedExperiment(log2(counts(pca_dds, normalized=TRUE)),colData=colData(pca_dds))
 pdf('../results/pca.pdf')
-plotPCA( DESeqTransform(se))
+plotPCA( DESeqTransform(se))+mytemp
 dev.off()
 png('../results/pca.png')
-plotPCA( DESeqTransform(se))
+plotPCA( DESeqTransform(se))+mytemp
 dev.off()
 res <- results(dds,contrast = c("condition","treat", "control"))
 res <- res[order(res$pvalue),]
 head(res)
+
+# plot corrplot
+pdf("../result/corrplot.pdf")
+corrplot(corr=corrs, method = 'color', order ="AOE", addCoef.col="grey",outline = "white" )
+dev.off()
+png("../result/corrplot.png")
+corrplot(corr=corrs, method = 'color', order ="AOE", addCoef.col="grey",outline = "white" )
+dev.off()
 
 resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE)), by="row.names", sort=FALSE)
 
@@ -106,5 +121,14 @@ png('../results/Treat_vs_control_diff.png')
 pheatmap(pdata[,1:length(file_name)],col=colorRampPalette(c('blue','white','red'))(50),scale='none',cluster_rows=F,cluster_cols=F,show_rownames=F,cellwidth=30,annotation_row=ann,annotation_col=ann_col)
 dev.off()
 
+# plot volcano plot
+pdata_volc <- newresdata[newresdata$pvalue<p_value,]
+pdata_volc <- pdata_volc[!is.na(pdata_volc$pvalue),]
+pdata_volc$status[pdata_volc$pvalue<0.05&pdata_volc$log2FoldChange>1]<-"genes_up"
+pdata_volc$status[pdata_volc$pvalue<0.05&pdata_volc$log2FoldChange< -1]<-"genes_down"
+pdata_volc$status[!(pdata_volc$pvalue<0.05&(pdata_volc$log2FoldChange< -1|pdata_volc$log2FoldChange> 1))]<-"genes_normal"
 
+p<- ggplot(pdata_volc,aes(x=log2FoldChange,y=-1*log10(pvalue)))+mytemp+geom_point(aes(color=status)) + xlim(-4,4) + ylim(0,25)+scale_color_manual(values =c('darkgreen','dodgerblue4','darkred'))+xlab("log2FC")+ylab("-log10FDR")
+ggsave(p,filename="../results/volcano.pdf")
+ggsave(p,filename="../results/volcano.png")
 ####################
