@@ -278,7 +278,8 @@ def main():
 
 if __name__=="__main__":
     global SOFT_PATH
-    SOFT_PATH="/home/adam/new_dir/jiayin/rainbowRNA"
+    SOFT_PATH=[i.rstrip() for i in open("~/bin/.rainbow_path_store")][0]
+    sh("source activate rainbow_env")
     main()
 
 
