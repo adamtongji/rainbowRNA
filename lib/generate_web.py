@@ -2,11 +2,11 @@
 import os
 import sys
 
-resultdir = sys.argv[1]
-webdir = sys.argv[2]
+# resultdir = sys.argv[1]
+# webdir = sys.argv[2]
 sh = os.system
 
-def load_fig():
+def load_fig(resultdir,webdir):
     sh("cp {}/results/pca.png {}/static/pic/images/figure3.5.5.png".format(resultdir, webdir))
     sh("cp {}/results/Treat_vs_control_diff.png {}/static/pic/images/figure3.5.7.png".format(resultdir, webdir))
     sh("cp {}/results/up/gene_up_go.png {}/static/pic/images/figure4.1.2.png".format(resultdir, webdir))
@@ -21,7 +21,7 @@ def load_fig():
 
 
 
-def load_table():
+def load_table(resultdir,webdir):
     outf = [i.rstrip() for i in open("{}/templates/mapping_summary.html".format(webdir))]
     with open("{}/templates/mapping_summary.html".format(webdir), "w") as fo:
         table1 = [i.rstrip().split("\t") for i in open("{}/results/mapping_rate/mapping_rate_summary.txt" \
@@ -113,8 +113,8 @@ def process_body(intab):
     return start + mid + tail
 
 
-def update_html():
-    load_fig()
-    load_table()
+def update_html(resultdir,webdir):
+    load_fig(resultdir,webdir)
+    load_table(resultdir,webdir)
 
 
