@@ -1,6 +1,5 @@
 rm(list=ls())
 library(DESeq2)
-library(reshape2)
 library(pheatmap)
 library(corrplot)
 library(ggplot2)
