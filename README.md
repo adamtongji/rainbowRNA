@@ -14,7 +14,7 @@ bash Miniconda3-latest-Linux-x86_64.sh -b
 `
 git clone https://github.com/adamtongji/rainbowRNA
 `
-3. Install CIRI2 and targetscan if you want to run circRNA module
+3. Install CIRI2 and targetscan(including lib) if you want to run circRNA module
 
 CIRI2: ["https://sourceforge.net/projects/ciri/files/CIRI2/"](https://sourceforge.net/projects/ciri/files/CIRI2/)
 Targetscan: ["http://www.targetscan.org/vert_71/vert_71_data_download/targetscan_70.zip"](http://www.targetscan.org/vert_71/vert_71_data_download/targetscan_70.zip)
@@ -23,4 +23,6 @@ Targetscan: ["http://www.targetscan.org/vert_71/vert_71_data_download/targetscan
 `
 bash install.sh
 `
+
+5. (Recommend) Install the genome from Illumina iGenome
 

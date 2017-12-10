@@ -12,7 +12,7 @@ r-corrplot
 star ==2.5.3a
 hisat2
 subread
-bedtools ==2.2.6
+bedtools ==2.26.0
 bwa ==0.7.17
 
 # remain ciri2, targetscan, targetscan lib, hisat2的Index 和iGenome
