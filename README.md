@@ -9,15 +9,23 @@
 ```Shell
 wget -c https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh -b
+# then add conda environ to you local enviroment.
+# Please add:
+# export PATH=PATH_TO_CONDA_BIN:$PATH
+# to ~/.bashrc, for example
+
+(conda config --add channels r)
+conda config --add channels defaults
+conda config --add channels conda-forge
+conda config --add channels bioconda
 ```
 2. Download the source code to local disk from the git directory <br>
 ```Shell
 git clone https://github.com/adamtongji/rainbowRNA
 ```
-3. Install CIRI2 and targetscan(including lib) if you want to run circRNA module <br>
+3. Install CIRI2  if you want to run circRNA module <br>
 
 - CIRI2: ["https://sourceforge.net/projects/ciri/files/CIRI2/"](https://sourceforge.net/projects/ciri/files/CIRI2/)
-- Targetscan: ["http://www.targetscan.org/vert_71/vert_71_data_download/targetscan_70.zip"](http://www.targetscan.org/vert_71/vert_71_data_download/targetscan_70.zip)
 
 4. Install the rainbowRNA <br>
 ```Shell

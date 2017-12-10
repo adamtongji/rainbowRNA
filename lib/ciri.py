@@ -18,6 +18,7 @@ def ciri_run(outprefix,genomefile,annotationfile, *files):
 
 
 def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genomefile,genome="hg19"):
+    #softpath=[i.rstrip() for i in open("~/bin/.rainbow_path_store")][0]
     if not os.path.isdir("{0}/results/".format(outputdir)):
         sh("mkdir {0}/results/".format(outputdir))
     if not os.path.isdir("{0}/expr/".format(outputdir)):
@@ -112,15 +113,17 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
               awk '{2}' > {1}/results/targetscan/circ_down_sequence.txt" \
            .format(genomefile, outputdir, awk_arg, annotationfile))
 
-    sh("targetscan_60.pl /home/Public/software/targetscan/miR_Family_Info.txt {0}/results/targetscan/circ_up_sequence.txt\
-       {0}/results/targetscan/circ_up_miRNA.txt ".format(outputdir))
-    sh("targetscan_60.pl /home/Public/software/targetscan/miR_Family_Info.txt {0}/results/targetscan/circ_down_sequence.txt\
-        {0}/results/targetscan/circ_down_miRNA.txt ".format(outputdir))
-    sh("cp /home/Public/software/targetscan/TA_SPS_by_seed_region.txt ./")
-    sh("targetscan_60_context_scores.pl /home/Public/software/targetscan/miR_for_context_scores.txt\
-     {0}/results/targetscan/circ_down_miRNA.txt {0}/results/circ_down2.txt {0}/results/targetscan/circ_down_score.txt".format(outputdir))
-    sh("targetscan_60_context_scores.pl /home/Public/software/targetscan/miR_for_context_scores.txt\
-        {0}/results/targetscan/circ_up_miRNA.txt {0}/results/circ_up2.txt {0}/results/targetscan/circ_up_score.txt".format(outputdir))
+    sh("{1}/bin/targetscan_60.pl {1}/lib/db/targetscan/miR_Family_Info.txt {0}/results/targetscan/circ_up_sequence.txt\
+       {0}/results/targetscan/circ_up_miRNA.txt ".format(outputdir,softpath))
+    sh("{1}/bin/targetscan_60.pl {1}/lib/db/targetscan/miR_Family_Info.txt {0}/results/targetscan/circ_down_sequence.txt\
+        {0}/results/targetscan/circ_down_miRNA.txt ".format(outputdir,softpath))
+    sh("cp {0}/lib/db/targetscan/TA_SPS_by_seed_region.txt ./".format(softpath))
+    sh("{1}/bin/targetscan_60_context_scores.pl {1}/lib/db/targetscan/miR_for_context_scores.txt\
+     {0}/results/targetscan/circ_down_miRNA.txt {0}/results/circ_down2.txt {0}/results/targetscan/circ_down_score.txt"\
+       .format(outputdir,softpath))
+    sh("{1}/bin/targetscan_60_context_scores.pl {1}/lib/db/targetscan/miR_for_context_scores.txt\
+        {0}/results/targetscan/circ_up_miRNA.txt {0}/results/circ_up2.txt {0}/results/targetscan/circ_up_score.txt"\
+       .format(outputdir,softpath))
     sh("rm ./TA_SPS_by_seed_region.txt")
     sh("cut -f1-13,17 {0}/results/targetscan/circ_up_score.txt >{0}/results/targetscan/circ_up_tmp.txt".format(outputdir))
     sh("cut -f1-13,17 {0}/results/targetscan/circ_down_score.txt >{0}/results/targetscan/circ_down_tmp.txt".format(outputdir))
@@ -205,14 +208,14 @@ def ciri_process(outputdir,nrep, pairtype, pvalue,softpath,annotationfile,genome
             print >>f, line
 
     sh("sort -k 2gr {0}/results/gsea_input.txt >{0}/results/gsea/gsea_input.rnk".format(outputdir))
-    sh("export LANG=en_US.UTF-8;java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
+    sh("export LANG=en_US.UTF-8;java -cp {1}/bin/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.bp.v5.1.symbols.gmt\
      -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
       -rpt_label bp -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-       -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>gsea.log".format(outputdir))
-    sh("export LANG=en_US.UTF-8; java -cp /usr/local/src/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
+       -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>gsea.log".format(outputdir,softpath))
+    sh("export LANG=en_US.UTF-8; java -cp {1}/bin/gsea2-2.2.2.jar -Xmx2g xtools.gsea.GseaPreranked -gmx gseaftp.broadinstitute.org://pub/gsea/gene_sets/c2.cp.kegg.v5.1.symbols.gmt\
      -collapse false -mode Max_probe -norm meandiv -nperm 1000 -rnk {0}/results/gsea/gsea_input.rnk -scoring_scheme weighted\
       -rpt_label kegg -include_only_symbols true -make_sets true -plot_top_x 20 -rnd_seed timestamp -set_max 500\
-     -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>>gsea.log".format(outputdir))
+     -set_min 15 -zip_report false -out {0}/results/gsea/ -gui false &>>gsea.log".format(outputdir,softpath))
 
     # step 4 cytoscape
     if not os.path.exists('{0}/results/cytoscape/'.format(outputdir)):
