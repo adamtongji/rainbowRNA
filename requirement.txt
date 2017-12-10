@@ -1,5 +1,23 @@
-
 R
+samtools ==0.1.19
+bioconductor-deseq2 ==1.18.1
+r-pheatmap
+bioconductor-org.mm.eg.db
+bioconductor-org.Hs.eg.db
+bioconductor-pathview
+r-ggplot2
+r-reshape2 ==1.4.2
+bioconductor-clusterprofiler
+r-corrplot
+star ==2.5.3a
+hisat2
+subread
+bedtools ==2.2.6
+bwa ==0.7.17
+
+# 就差ciri2, targetscan, targetscan库, hisat2的Index 和iGenome
+
+
 # Environ
 # conda
 
