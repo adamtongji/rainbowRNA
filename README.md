@@ -23,6 +23,18 @@ Targetscan: ["http://www.targetscan.org/vert_71/vert_71_data_download/targetscan
 `
 bash install.sh
 `
+If occurs with following error:
+`
+if not line or line.startswith('#'):
+   UnicodeDecodeError:
+   'ascii' codec can't decode byte 0xe7 in position 50: ordinal not in range(128)
+`
+Please add following code to the script file `"YOUPATH"/miniconda2/lib/python2.7/site-packages/conda/cli/common.py`
+`
+reload(sys)
+sys.setdefaultencoding('utf8')
+`
+Just add these code below  `import sys` to avoid encoding error.
 
-5. (Recommend) Install the genome from Illumina iGenome
-
+5. (Recommend) Install the genome and annotation files from Illumina iGenomes
+The igenome website: **[links](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**.
