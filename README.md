@@ -5,36 +5,36 @@
 **唯一支持浏览器: 火狐**
 
 ### Installation
-1. Download and install miniconda, and configure the miniconda environment.
+1. Download and install miniconda, and configure the miniconda environment.<br>
 `
 wget -c https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh -b
 `
-2. Download the source code to local disk from the git directory
+2. Download the source code to local disk from the git directory <br>
 `
 git clone https://github.com/adamtongji/rainbowRNA
 `
-3. Install CIRI2 and targetscan(including lib) if you want to run circRNA module
+3. Install CIRI2 and targetscan(including lib) if you want to run circRNA module <br>
 
 - CIRI2: ["https://sourceforge.net/projects/ciri/files/CIRI2/"](https://sourceforge.net/projects/ciri/files/CIRI2/)
 - Targetscan: ["http://www.targetscan.org/vert_71/vert_71_data_download/targetscan_70.zip"](http://www.targetscan.org/vert_71/vert_71_data_download/targetscan_70.zip)
 
-4. Install the rainbowRNA
+4. Install the rainbowRNA <br>
 `
 bash install.sh
 `
-If occurs with following error:
+If occurs with following error: <br>
 `
 if not line or line.startswith('#'):
    UnicodeDecodeError:
    'ascii' codec can't decode byte 0xe7 in position 50: ordinal not in range(128)
 `
-Please add following code to the script file `"YOUPATH"/miniconda2/lib/python2.7/site-packages/conda/cli/common.py`
+Please add following code to the script file `"YOUPATH"/miniconda2/lib/python2.7/site-packages/conda/cli/common.py` <br>
 `
 reload(sys)
 sys.setdefaultencoding('utf8')
 `
-Just add these code below  `import sys` to avoid encoding error.
+Just add these code below  `import sys` to avoid encoding error.<br>
 
-5. (Recommend) Install the genome and annotation files from Illumina iGenomes
-The igenome website: **[links](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**.
+5. (Recommend) Install the genome and annotation files from Illumina iGenomes <br>
+The igenome website: **[links](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**. <br>
