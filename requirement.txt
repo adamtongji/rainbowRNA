@@ -15,16 +15,12 @@ subread
 bedtools ==2.2.6
 bwa ==0.7.17
 
-# 就差ciri2, targetscan, targetscan库, hisat2的Index 和iGenome
-
-
+# remain ciri2, targetscan, targetscan lib, hisat2的Index 和iGenome
 # Environ
 # conda
-
 # python2.7.5 or higher
 # pip
 # numpy
-
 # R(3.2 or higher)
 # DESeq2
 # pheatmap
@@ -35,7 +31,6 @@ bwa ==0.7.17
 # reshape2
 # clusterProfiler
 # corrplot
-
 ## software
 # STAR
 # hisat2
@@ -45,7 +40,6 @@ bwa ==0.7.17
 # targetscan
 # gsea
 # bwa
-
 ## Other database
 # IGENOME(UCSC)
 # hisat2 index
