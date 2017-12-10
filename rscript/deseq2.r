@@ -80,10 +80,10 @@ res <- res[order(res$pvalue),]
 head(res)
 
 # plot corrplot
-pdf("../result/corrplot.pdf")
+pdf("../results/corrplot.pdf")
 corrplot(corr=corrs, method = 'color', order ="AOE", addCoef.col="grey",outline = "white" )
 dev.off()
-png("../result/corrplot.png")
+png("../results/corrplot.png")
 corrplot(corr=corrs, method = 'color', order ="AOE", addCoef.col="grey",outline = "white" )
 dev.off()
 
