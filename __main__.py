@@ -280,7 +280,7 @@ if __name__=="__main__":
     global SOFT_PATH
     usr_home=os.path.expanduser('~')
     SOFT_PATH=[i.rstrip() for i in open("{}/bin/.rainbow_path_store".format(usr_home))][0]
-    sh("source activate rainbow_env")
+    os.system("source activate rainbow_env")
     main()
 
 
