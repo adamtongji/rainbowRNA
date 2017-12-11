@@ -1,18 +1,18 @@
 R
 samtools ==0.1.19
-bioconductor-deseq2 ==1.18.1
+bioconductor-deseq2
 r-pheatmap
 bioconductor-org.mm.eg.db
 bioconductor-org.Hs.eg.db
 bioconductor-pathview
 r-ggplot2
-r-reshape2 ==1.4.2
+r-reshape2
 bioconductor-clusterprofiler
 r-corrplot
-star ==2.5.3a
+star
 hisat2
 subread
-bedtools ==2.26.0
+bedtools
 bwa
 perl
 

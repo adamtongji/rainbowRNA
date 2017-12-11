@@ -2,7 +2,8 @@
 
 #git clone https://github.com/adamtongji/rainbowRNA
 # if error is not about conda, user can skip the step of conda create.
-conda create -n rainbow_env --file requirement.txt -c R -c bioconda -c default -y
+conda create -n rainbow_env --file requirement.txt -c R -c bioconda -y
+# conda update --all -c bioconda -c R -c default
 ##
 source activate rainbow_env
 mkdir -p ~/bin

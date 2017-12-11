@@ -31,6 +31,19 @@ git clone https://github.com/adamtongji/rainbowRNA
 ```Shell
 bash install.sh
 ```
+
+5. (Recommend) Install the genome and annotation files from Illumina iGenomes <br>
+The igenome website: **[iGenoms download page](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**. <br>
+
+6. After installation, please check FAQ bug by test you conda and
+```R
+library(clusterProfiler)
+```
+To test correct installation of R environment
+
+
+## FAQ
+1. Python2字符串编码报错。
 If occurs with following error: <br>
 ```Python
 if not line or line.startswith('#'):
@@ -44,5 +57,21 @@ sys.setdefaultencoding('utf8')
 ```
 Just add these code below  `"import sys"` to avoid encoding error.<br>
 
-5. (Recommend) Install the genome and annotation files from Illumina iGenomes <br>
-The igenome website: **[iGenoms download page](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**. <br>
+2. conda多个channel间不支持报错。
+If occurs with following error: <br>
+```R
+错误: package or namespace load failed for ‘stringi’
+in dyn.load(file, DLLpath = DLLpath, ...):
+```
+Please run R in "rainbow_env", and re-install "stringi" after installation
+as following code:
+```Shell
+source activate rainbow_env
+R
+```
+```R
+install.packages("stringi",dep=T)
+```
+
+其他错误请在issue中留言,或者联系邮箱: adam.tongji@gmail.com
+个人主页: [adamtongji.github.io](https://adamtongji.github.io)
