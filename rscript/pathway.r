@@ -14,11 +14,10 @@ gene.down<-bitr(filedown, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgD
 
 down_go<- enrichGO(gene         = gene.down$SYMBOL,
                    OrgDb         = org.Hs.eg.db,
-                   keytype       = 'SYMBOL',
                    ont           = "BP",
                    pAdjustMethod = "BH",
                    pvalueCutoff  = 0.01,
-                   qvalueCutoff  = 0.05)
+                   qvalueCutoff  = 0.05) #keytype       = 'SYMBOL',
 
 write.table(down_go,"gene_down_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(down_go)
@@ -50,11 +49,10 @@ gene.up<-bitr(fileup, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = 
 
 up_go<- enrichGO(gene         = gene.up$SYMBOL,
                  OrgDb         = org.Hs.eg.db,
-                 keytype       = 'SYMBOL',
                  ont           = "BP",
                  pAdjustMethod = "BH",
                  pvalueCutoff  = 0.01,
-                 qvalueCutoff  = 0.05)
+                 qvalueCutoff  = 0.05) #  keytype       = 'SYMBOL',
 
 write.table(up_go,"gene_up_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(up_go)
