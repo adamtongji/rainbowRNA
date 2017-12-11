@@ -79,6 +79,7 @@ res <- results(dds,contrast = c("condition","treat", "control"))
 res <- res[order(res$pvalue),]
 head(res)
 
+corrs=cor(countdata)
 # plot corrplot
 pdf("../results/corrplot.pdf")
 corrplot(corr=corrs, method = 'color', order ="AOE", addCoef.col="grey",outline = "white" )
