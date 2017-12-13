@@ -20,20 +20,20 @@ down_go<- enrichGO(gene         = gene.down$ENTREZID,
                    pvalueCutoff  = 0.01,
                    qvalueCutoff  = 0.05) #
 
-write.table(down_go,"gene_down_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
+write.table(down_go,"genes_down_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(down_go)
-ggsave(p,file="gene_down_go.pdf",width=8)
-ggsave(p,file="gene_down_go.png",width=8)
+ggsave(p,file="genes_down_go.pdf",width=8)
+ggsave(p,file="genes_down_go.png",width=8)
 
 keggs<-bitr_kegg(gene.down$ENTREZID,fromType = "ncbi-geneid",toType = "kegg",organism = "hsa")
 down_kegg <- enrichKEGG(gene         = gene.down$ENTREZID,
                         organism     = 'hsa',
                         pvalueCutoff = 0.05)
 p<-dotplot(down_kegg)
-ggsave(p,file="gene_down_kegg.pdf",width=8)
-ggsave(p,file="gene_down_kegg.png",width=8)
+ggsave(p,file="genes_down_kegg.pdf",width=8)
+ggsave(p,file="genes_down_kegg.png",width=8)
 
-write.table(down_kegg,"gene_down_kegg.xls",sep='\t',quote=F,col.names = T,row.names = F)
+write.table(down_kegg,"genes_down_kegg.xls",sep='\t',quote=F,col.names = T,row.names = F)
 
 for (kegg_id in down_kegg$ID){
   pv <-pathview(gene.data = filedown, pathway.id = kegg_id,species = "hsa",kegg.native=T,
@@ -55,20 +55,20 @@ up_go<- enrichGO(gene         = gene.up$ENTREZID,
                  pvalueCutoff  = 0.01,
                  qvalueCutoff  = 0.05) #  keytype       = 'SYMBOL',
 
-write.table(up_go,"gene_up_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
+write.table(up_go,"genes_up_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(up_go)
-ggsave(p,file="gene_up_go.pdf",width=8)
-ggsave(p,file="gene_up_go.png",width=8)
+ggsave(p,file="genes_up_go.pdf",width=8)
+ggsave(p,file="genes_up_go.png",width=8)
 
 keggs<-bitr_kegg(gene.up$ENTREZID,fromType = "ncbi-geneid",toType = "kegg",organism = "hsa")
 up_kegg <- enrichKEGG(gene         = gene.up$ENTREZID,
                       organism     = 'hsa',
                       pvalueCutoff = 0.05)
 
-write.table(up_kegg,"gene_up_kegg.xls",sep='\t',quote=F,col.names = T,row.names = F)
+write.table(up_kegg,"genes_up_kegg.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(up_kegg)
-ggsave(p,file="gene_up_kegg.pdf",width=8)
-ggsave(p,file="gene_up_kegg.png",width=8)
+ggsave(p,file="genes_up_kegg.pdf",width=8)
+ggsave(p,file="genes_up_kegg.png",width=8)
 
 
 for (kegg_id in up_kegg$ID){
