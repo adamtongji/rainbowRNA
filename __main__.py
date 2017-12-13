@@ -147,10 +147,10 @@ def mapping_main_star(STARpath, STARindex, STARindexdir,Treat, Control,Outputdir
 def deseq_main(Outputdir, Pair_rep, pvalue,Expr_dir=None):
     if Expr_dir is None:
         Expr_dir = "{}/expr".format(Outputdir)
-    if not os.path.exists('{0}/results'.format(Outputdir)):
-        os.makedirs('{0}/results'.format(Outputdir))
-        os.makedirs('{0}/results/up'.format(Outputdir))
-        os.makedirs('{0}/results/down'.format(Outputdir))
+    #if not os.path.exists('{0}/results'.format(Outputdir)):
+    sh('mkdir -p {0}/results'.format(Outputdir))
+    sh('mkdir -p {0}/results/up'.format(Outputdir))
+    sh('mkdir -p {0}/results/down'.format(Outputdir))
 
     sh("Rscript {}/rscript/deseq2.r {} {} {} &>>deseq.log"\
        .format(SOFT_PATH, Expr_dir,  Pair_rep, pvalue))
@@ -163,10 +163,10 @@ def downstream_main(Outputdir, Genome):
     if Genome.lower() == 'mm9' or Genome.lower() == 'mm10':
         sh("Rscript {1}/rscript/mouse_pathway.r {0}/results &>pathway.log".format(Outputdir,SOFT_PATH))
     if not os.path.exists('{0}/results/gsea/'.format(Outputdir)):
-        os.makedirs('{0}/results/gsea/'.format(Outputdir))
+        sh('mkdir -p {0}/results/gsea/'.format(Outputdir))
     else:
         sh('rm -rf {0}/results/gsea/'.format(Outputdir))
-        os.makedirs('{0}/results/gsea/'.format(Outputdir))
+        sh('mkdir -p {0}/results/gsea/'.format(Outputdir))
     gsea_file = [i.rstrip().split('\t') for i in open('{0}/results/Treat_vs_control_diff.txt'.format(Outputdir))]
     gsea_file = [i[:1] + i[4:5] for i in gsea_file]
     gsea_file = gsea_file[1:]
