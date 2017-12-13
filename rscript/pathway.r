@@ -9,7 +9,7 @@ outresultdir = args[1]
 setwd(outresultdir)
 filedown<-read.table("genes_down.txt",sep='\t')
 filedown<-as.matrix(filedown)
-rownames(filedown)<-filedown[1]
+
 setwd("./down")
 gene.down<-bitr(filedown, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
@@ -35,9 +35,10 @@ ggsave(p,file="genes_down_kegg.png",width=8)
 
 write.table(down_kegg,"genes_down_kegg.xls",sep='\t',quote=F,col.names = T,row.names = F)
 
+
 for (kegg_id in down_kegg$ID){
-  pv <-pathview(gene.data = filedown, pathway.id = kegg_id,species = "hsa",kegg.native=T,
-                low = list(gene = "green"),mid =list(gene = "gray"), 
+  pv <-pathview(gene.data = gene.down[,3], pathway.id = kegg_id,species = "hsa",kegg.native=T,
+                low = list(gene = "green"),mid =list(gene = "gray"),  gene.idtype = "ENTREZID",
                 high = list(gene = "green"),plot.col.key=FALSE)
 }
 
@@ -70,13 +71,14 @@ p<-dotplot(up_kegg)
 ggsave(p,file="genes_up_kegg.pdf",width=8)
 ggsave(p,file="genes_up_kegg.png",width=8)
 
-
+fileup<-data.frame(fileup)
+rownames(fileup)<-fileup[,1]
 for (kegg_id in up_kegg$ID){
-  pv <-pathview(gene.data = fileup, pathway.id = kegg_id,species = "hsa",kegg.native=T,
-                low = list(gene = "red"),mid =list(gene = "gray"), 
+  pv <-pathview(gene.data = gene.up[,3], pathway.id = kegg_id,species = "hsa",kegg.native=T,
+                low = list(gene = "red"),mid =list(gene = "gray"),  gene.idtype = "ENTREZID",
                 high = list(gene = "red"),plot.col.key=FALSE)
 }
-args=paste("cp ",up_kegg$ID[1],".png sample.png",sep='')
+args=paste("cp ",up_kegg$ID[1],".pathview.png sample.png",sep='')
 system(args)
 
 
