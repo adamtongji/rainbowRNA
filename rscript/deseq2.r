@@ -122,7 +122,7 @@ pheatmap(pdata[,1:length(file_name)],col=colorRampPalette(c('blue','white','red'
 dev.off()
 
 # plot volcano plot
-pdata_volc <- newresdata[newresdata$pvalue<p_value,]
+pdata_volc <- newresdata # [newresdata$pvalue<p_value,]
 pdata_volc <- pdata_volc[!is.na(pdata_volc$pvalue),]
 pdata_volc$status[pdata_volc$pvalue<0.05&pdata_volc$log2FoldChange>1]<-"genes_up"
 pdata_volc$status[pdata_volc$pvalue<0.05&pdata_volc$log2FoldChange< -1]<-"genes_down"
