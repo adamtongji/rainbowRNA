@@ -45,7 +45,6 @@ for (kegg_id in down_kegg$ID){
 setwd("../")
 fileup<-read.table("genes_up.txt",sep='\t')
 fileup<-as.matrix(fileup)
-rownames(fileup)<-fileup[,1]
 setwd("./up")
 gene.up<-bitr(fileup, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
