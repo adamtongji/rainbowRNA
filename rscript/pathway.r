@@ -12,12 +12,12 @@ filedown<-as.matrix(filedown)
 setwd("./down")
 gene.down<-bitr(filedown, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
-down_go<- enrichGO(gene         = gene.down$SYMBOL,
+down_go<- enrichGO(gene         = gene.down$ENTREZID,
                    OrgDb         = org.Hs.eg.db,
                    ont           = "BP",
                    pAdjustMethod = "BH",
                    pvalueCutoff  = 0.01,
-                   qvalueCutoff  = 0.05) #keytype       = 'SYMBOL',
+                   qvalueCutoff  = 0.05) #
 
 write.table(down_go,"gene_down_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(down_go)
@@ -26,7 +26,6 @@ ggsave(p,file="gene_down_go.png",width=8)
 
 keggs<-bitr_kegg(gene.down$ENTREZID,fromType = "ncbi-geneid",toType = "kegg",organism = "hsa")
 down_kegg <- enrichKEGG(gene         = gene.down$ENTREZID,
-                        
                         organism     = 'hsa',
                         pvalueCutoff = 0.05)
 p<-dotplot(down_kegg)
@@ -47,7 +46,7 @@ fileup<-as.matrix(fileup)
 setwd("./up")
 gene.up<-bitr(fileup, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
-up_go<- enrichGO(gene         = gene.up$SYMBOL,
+up_go<- enrichGO(gene         = gene.up$ENTREZID,
                  OrgDb         = org.Hs.eg.db,
                  ont           = "BP",
                  pAdjustMethod = "BH",
@@ -61,7 +60,6 @@ ggsave(p,file="gene_up_go.png",width=8)
 
 keggs<-bitr_kegg(gene.up$ENTREZID,fromType = "ncbi-geneid",toType = "kegg",organism = "hsa")
 up_kegg <- enrichKEGG(gene         = gene.up$ENTREZID,
-                      
                       organism     = 'hsa',
                       pvalueCutoff = 0.05)
 
