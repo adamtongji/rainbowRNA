@@ -9,6 +9,7 @@ outresultdir = args[1]
 setwd(outresultdir)
 filedown<-read.table("genes_down.txt",sep='\t')
 filedown<-as.matrix(filedown)
+rownames(filedown)<-filedown[1]
 setwd("./down")
 gene.down<-bitr(filedown, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
@@ -43,6 +44,7 @@ for (kegg_id in down_kegg$ID){
 setwd("../")
 fileup<-read.table("genes_up.txt",sep='\t')
 fileup<-as.matrix(fileup)
+rownames(fileup)<-fileup[,1]
 setwd("./up")
 gene.up<-bitr(fileup, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
@@ -74,7 +76,7 @@ for (kegg_id in up_kegg$ID){
                 low = list(gene = "red"),mid =list(gene = "gray"), 
                 high = list(gene = "red"),plot.col.key=FALSE)
 }
-args=paste("cp ",down_kegg$ID[1],".png sample.png",sep='')
+args=paste("cp ",up_kegg$ID[1],".png sample.png",sep='')
 system(args)
 
 
