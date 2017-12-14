@@ -14,7 +14,7 @@ def load_fig(resultdir,webdir):
     sh("cp {}/results/up/genes_up_kegg.png {}/static/pic/images/figure4.2.2.png".format(resultdir, webdir))
     sh("cp {}/results/down/genes_down_kegg.png {}/static/pic/images/figure4.2.1.png".format(resultdir, webdir))
     sh("cp {}/results/up/sample.png {}/static/pic/images/figure4.3.png".format(resultdir, webdir))
-    sh("a=`ls {0}/final/phase4-GSEA/BP/enplot_*.png`;for i in $a; cp $i \
+    sh("a=`ls {0}/final/phase4-GSEA/BP/enplot_*.png`;for i in $a;do cp $i \
     {1}/static/pic/images/figure4.4.png;break;done ".format(resultdir, webdir))
     sh("cp {}/results/corrplot.png {}/static/pic/images/figure3.5.4.png".format(resultdir, webdir))
     sh("cp {}/results/volcano.png {}/static/pic/images/figure3.5.8.png".format(resultdir, webdir))
