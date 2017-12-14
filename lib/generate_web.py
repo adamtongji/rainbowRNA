@@ -13,7 +13,7 @@ def load_fig(resultdir,webdir):
     sh("cp {}/results/down/genes_down_go.png {}/static/pic/images/figure4.1.1.png".format(resultdir, webdir))
     sh("cp {}/results/up/genes_up_kegg.png {}/static/pic/images/figure4.2.2.png".format(resultdir, webdir))
     sh("cp {}/results/down/genes_down_kegg.png {}/static/pic/images/figure4.2.1.png".format(resultdir, webdir))
-    sh("cp {}/results/down/sample.png {}/static/pic/images/figure4.3.png".format(resultdir, webdir))
+    sh("cp {}/results/up/sample.png {}/static/pic/images/figure4.3.png".format(resultdir, webdir))
     sh("a=`ls {0}/final/phase4-GSEA/BP/enplot_*.png`;for i in $a; cp $i \
     {1}/static/pic/images/figure4.4.png;break;done ".format(resultdir, webdir))
     sh("cp {}/results/corrplot.png {}/static/pic/images/figure3.5.4.png".format(resultdir, webdir))
@@ -47,7 +47,7 @@ def load_table(resultdir,webdir):
             print >> fo, line
 
     outf = [i.rstrip() for i in open("{}/templates/function.html".format(webdir))]
-    with open("{}/templates/expression.html".format(webdir), "w") as fo:
+    with open("{}/templates/function.html".format(webdir), "w") as fo:
         table1 = [i.rstrip().split("\t")[:7] for i in open("{}/results/up/genes_up_go.xls" \
                                                        .format(resultdir))]
         outtext1 ="""<table class="table table-hover table-bordered">
