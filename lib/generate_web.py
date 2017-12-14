@@ -9,10 +9,10 @@ sh = os.system
 def load_fig(resultdir,webdir):
     sh("cp {}/results/pca.png {}/static/pic/images/figure3.5.5.png".format(resultdir, webdir))
     sh("cp {}/results/Treat_vs_control_diff.png {}/static/pic/images/figure3.5.7.png".format(resultdir, webdir))
-    sh("cp {}/results/up/gene_up_go.png {}/static/pic/images/figure4.1.2.png".format(resultdir, webdir))
-    sh("cp {}/results/down/gene_down_go.png {}/static/pic/images/figure4.1.1.png".format(resultdir, webdir))
-    sh("cp {}/results/up/gene_up_kegg.png {}/static/pic/images/figure4.2.2.png".format(resultdir, webdir))
-    sh("cp {}/results/down/gene_down_kegg.png {}/static/pic/images/figure4.2.1.png".format(resultdir, webdir))
+    sh("cp {}/results/up/genes_up_go.png {}/static/pic/images/figure4.1.2.png".format(resultdir, webdir))
+    sh("cp {}/results/down/genes_down_go.png {}/static/pic/images/figure4.1.1.png".format(resultdir, webdir))
+    sh("cp {}/results/up/genes_up_kegg.png {}/static/pic/images/figure4.2.2.png".format(resultdir, webdir))
+    sh("cp {}/results/down/genes_down_kegg.png {}/static/pic/images/figure4.2.1.png".format(resultdir, webdir))
     sh("cp {}/results/down/sample.png {}/static/pic/images/figure4.3.png".format(resultdir, webdir))
     sh("a=`ls {0}/final/phase4-GSEA/BP/enplot_*.png`;for i in $a; cp $i \
     {1}/static/pic/images/figure4.4.png;break;done ".format(resultdir, webdir))
