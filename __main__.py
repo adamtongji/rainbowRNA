@@ -203,6 +203,8 @@ def downstream_main(Outputdir, Genome):
            {0}/results/cytoscape'.format(Outputdir,SOFT_PATH))
     get_report(Outputdir)
     # sh("mkdir -p {}/html".format(Outputdir))
+    if os.path.exists("{}/html".format(Outputdir)):
+        sh("rm -rf {}/html".format(Outputdir))
     sh("cp -r {0}/lib/html_template {1}/html; mv {1}/html/index.html {1}/html/Web_Report.html"\
        .format(SOFT_PATH, Outputdir))
     update_html("{0}".format(Outputdir),"{0}/html/".format(Outputdir))
