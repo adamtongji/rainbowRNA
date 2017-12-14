@@ -17,7 +17,6 @@ down_go<- enrichGO(gene         = gene.down$ENTREZID,
                    OrgDb         = org.Hs.eg.db,
                    ont           = "BP",
                    pAdjustMethod = "BH",
-                   pvalueCutoff  = 0.01,
                    qvalueCutoff  = 0.05) #
 
 write.table(down_go,"genes_down_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
@@ -45,6 +44,7 @@ for (kegg_id in down_kegg$ID){
 setwd("../")
 fileup<-read.table("genes_up.txt",sep='\t')
 fileup<-as.matrix(fileup)
+
 setwd("./up")
 gene.up<-bitr(fileup, fromType='SYMBOL', toType=c('ENSEMBL',"ENTREZID"),OrgDb = org.Hs.eg.db)
 
@@ -52,8 +52,7 @@ up_go<- enrichGO(gene         = gene.up$ENTREZID,
                  OrgDb         = org.Hs.eg.db,
                  ont           = "BP",
                  pAdjustMethod = "BH",
-                 pvalueCutoff  = 0.01,
-                 qvalueCutoff  = 0.05) #  keytype       = 'SYMBOL',
+                 qvalueCutoff  = 0.05) #
 
 write.table(up_go,"genes_up_go.xls",sep='\t',quote=F,col.names = T,row.names = F)
 p<-dotplot(up_go)
