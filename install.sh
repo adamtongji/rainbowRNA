@@ -13,3 +13,4 @@ chmod 777 $myPath/bin/run.sh
 chmod 777 ~/bin/rainbowRNA
 echo $myPath > ~/bin/.rainbow_path_store
 chmod 700 ~/bin/.rainbow_path_store
+conda install java-jdk -c cyclus

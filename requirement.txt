@@ -15,7 +15,7 @@ subread
 bedtools
 bwa
 perl
-java-jdk ==8.0.112
+
 
 # remain ciri2, targetscan, targetscan lib, hisat2的Index 和iGenome
 # Environ
