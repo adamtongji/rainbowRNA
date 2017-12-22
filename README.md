@@ -4,6 +4,8 @@
 **ONLY Browser Support: Firefox** <br>
 **唯一支持浏览器: 火狐**<br>
 
+[**报告预览**](https://adamtongji.github.io/RNApipe/)
+
 ### Installation
 1. Download and install miniconda, and configure the miniconda environment.<br>
 ```Shell
@@ -40,6 +42,13 @@ The igenome website: **[iGenoms download page](https://support.illumina.com/sequ
 library(clusterProfiler)
 ```
 To test correct installation of R environment
+
+### Run the pipeline
+```Bash
+rainbowRNA config_star.txt
+# or
+nohup rainbowRNA config_star.txt &
+```
 
 
 ## FAQ
