@@ -83,5 +83,5 @@ R
 install.packages("stringi",dep=T)
 ```
 
-其他错误请在issue中留言,或者联系邮箱: adam.tongji@gmail.com <br>
+其他错误请在issue中留言 <br>
 个人主页: [adamtongji.github.io](https://adamtongji.github.io)<br>
