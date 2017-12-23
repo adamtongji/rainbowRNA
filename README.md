@@ -7,14 +7,15 @@
 [**报告预览**](https://adamtongji.github.io/RNApipe/)
 
 ### Installation
-1. Download and install miniconda, and configure the miniconda environment.<br>
+1. If conda is not installed in /home/"user"/miniconda3, download and install miniconda, and configure the miniconda environment.<br>
 ```Shell
-wget -c https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -b
+wget -c https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+bash Miniconda2-latest-Linux-x86_64.sh -b
 # then add conda environ to you local enviroment.
 # Please add:
 # export PATH=PATH_TO_CONDA_BIN:$PATH
-# to ~/.bashrc, for example
+# to ~/.bashrc and then:
+source ~/.bashrc
 
 (conda config --add channels r)
 conda config --add channels defaults
@@ -25,7 +26,7 @@ conda config --add channels bioconda
 ```Shell
 git clone https://github.com/adamtongji/rainbowRNA
 ```
-3. Install CIRI2  if you want to run circRNA module <br>
+3. Install CIRI2 in local if you want to run circRNA module <br>
 
 - CIRI2: ["https://sourceforge.net/projects/ciri/files/CIRI2/"](https://sourceforge.net/projects/ciri/files/CIRI2/)
 

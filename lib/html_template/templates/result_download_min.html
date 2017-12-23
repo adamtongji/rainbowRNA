@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link rel="stylesheet" href="../static/css/theme.css">
+        <script src="../static/js/jquery-3.2.1.min.js"></script>
+        <script src="../static/js/bootstrap.min.js"></script>
+
+    <title>转录组结题报告</title>
+</head>
+
+<body>
+<div class="container" >
+    <table width="100%" border="0" cellpadding="3" cellspacing="0">
+    <tr>
+      <td width="50%"><h2><b>RNAseq分析报告</b></h2></td>
+      <td width="12%"><img src="../static/pic/images/logo.png" height="52" width="110" align="right"></td>
+    </tr>
+    <tr>
+      <td width="20%" style="font-size:18px">转录组数据标准分析报告</td>
+      <td width="30%" style="text-align:right;padding:0px;margin:0px;font-size:14px">
+        <a href="http://www.rainbow-genome.com" target="_blank">
+          访问官网: &nbsp;www.rainbow-genome.com
+          </a>
+        <br>
+          <a href="Mailto:marketing@rainbow-genome.com?CC=adam.tongji@gmail.com&Subject=转录组测序分析">Email:marketing@rainbow-genome.com</a>
+        <br>
+        技术服务热线: 021-61539657<br>
+      </td>
+    </tr>
+    </table>
+</div>
+
+
+
+
+<div class="container">
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#home" data-toggle="tab">首页</a></li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      项目概览 <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#profile1" data-toggle="tab">建库测序流程</a></li>
+      <li><a href="#profile2" data-toggle="tab">生信分析流程</a></li>
+    </ul>
+  </li>
+
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      mRNA-seq标准分析 <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#dropdown11" data-toggle="tab">测序数据格式</a></li>
+
+      <li class="divider"></li>
+      <li><a href="#dropdown13" data-toggle="tab">参考序列比对</a></li>
+      <li><a href="#dropdown14" data-toggle="tab">基因表达水平分析</a></li>
+      <li><a href="#dropdown15" data-toggle="tab">差异基因功能及网络分析</a></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      lncRNA分析 <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#dropdown21" data-toggle="tab">lncRNA cis-regulation分析</a></li>
+      <li><a href="#dropdown22" data-toggle="tab">lncRNA trans-regulation分析</a></li>
+      <li><a href="#dropdown23" data-toggle="tab">lncRNA network分析</a></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      可变剪接分析<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#dropdown31" data-toggle="tab">可变剪接注释及差异分析(示例)</a></li>
+
+      <li><a href="#dropdown32" data-toggle="tab">可变剪接定制分析(示例)</a></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Methods及参考文献<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#dropdown41" data-toggle="tab">英文版Methods</a></li>
+      <li><a href="#dropdown43" data-toggle="tab">相关参考文献</a></li>
+      <li><a href="#dropdown42" data-toggle="tab">公司已发表文章</a></li>
+    </ul>
+  </li>
+
+</ul>
+</div>
+
+<div class="container">
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade active in" id="home">
+    <script>
+    $(document).ready(function(){
+    $('#home').load('main_page.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="profile1">
+    <script>
+    $(document).ready(function(){
+    $('#profile1').load('library_summary.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="profile2">
+    <script>
+    $(document).ready(function(){
+    $('#profile2').load('analysis_summary.html');
+    })
+    </script>
+  </div>
+
+  <div class="tab-pane fade" id="dropdown11">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown11').load('rawdata_intro.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown12">
+       <script>
+    $(document).ready(function(){
+    $('#dropdown12').load('seq_quality.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown13">
+       <script>
+    $(document).ready(function(){
+    $('#dropdown13').load('mapping_summary.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown14">
+       <script>
+    $(document).ready(function(){
+    $('#dropdown14').load('expression.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown15">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown15').load('function.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown21">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown21').load('lnc_cis.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown22">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown22').load('lnc_trans.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown23">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown23').load('lnc_network.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown31">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown31').load('AS_ann.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown32">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown32').load('AS_special.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown41">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown41').load('method_en.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown43">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown43').load('reference.html');
+    })
+    </script>
+  </div>
+  <div class="tab-pane fade" id="dropdown42">
+    <script>
+    $(document).ready(function(){
+    $('#dropdown42').load('publications.html');
+    })
+    </script>
+  </div>
+</div>
+</div>
+<footer>
+  <div class="container">
+    <br>
+     <div style="border-bottom:1px solid #CCC"></div>
+
+  <table width="100%" border="0" cellpadding="3" cellspacing="0">
+    <tr>
+      <td width="30%" style="font-size:12px"> <p>Copyright &copy; 上海嘉因生物科技有限公司</p></td>
+      <td width="30%" align="right" style="font-size:12px"> <p align="right">地址：上海市杨浦区赤峰路65号611室</p></td>
+    </tr>
+    </table>
+  </div></footer>
+</body>
