@@ -101,7 +101,7 @@ def input_check(*files):
 
     _file0 = files[0]+files[1]
     if len(_file0)>len(set(_file0)):
-            print "Same files in input.  Pleas check treat and control filenames!"
+            print "Same files in input.  Please check treat and control filenames!"
             sys.exit(1)
 
     for _file in files:
