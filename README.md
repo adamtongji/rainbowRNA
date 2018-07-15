@@ -36,7 +36,7 @@ bash install.sh
 ```
 
 5. (Recommend) Install the genome and annotation files from Illumina iGenomes <br>
-The igenome website: **[iGenoms download page](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**. <br>
+The igenome website: **[iGenomes download page](https://support.illumina.com/sequencing/sequencing_software/igenome.html)**. <br>
 
 6. After installation, please check FAQ bug by test you conda and
 ```R
